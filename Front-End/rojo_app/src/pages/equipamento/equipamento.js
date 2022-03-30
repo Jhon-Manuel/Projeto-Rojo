@@ -18,7 +18,11 @@ export class Equipamento extends Component{
         }
     }
 
-    
+    alterarEstadoEsquipamento = (alteracao) => {
+        this.setState({
+
+        })
+    }
 
 
 
@@ -31,8 +35,14 @@ export class Equipamento extends Component{
 
                 </header>
                 <main>
-                    <h1>ksksk</h1>
-                    <p>asdfasdf</p>
+                    <h1>Equipamento</h1>
+                    <div>
+                        <table >
+                            <tr>
+                                <th></th>
+                            </tr>
+                        </table>
+                    </div>
                 </main>
             </div>
         )
