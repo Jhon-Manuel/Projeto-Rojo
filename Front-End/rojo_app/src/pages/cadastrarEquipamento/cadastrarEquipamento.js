@@ -4,6 +4,7 @@ export class cadastrarEquipamento extends Component{
     constructor(props){
         super(props);
         this.state = {
+            tipoEquipamento : 0,
             Modelo : 0,
             NumeroSerie : 0,
             Gateway : 0,
