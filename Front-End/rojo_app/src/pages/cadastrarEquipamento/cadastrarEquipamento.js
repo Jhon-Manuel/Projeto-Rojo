@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Component } from "react";
 
 export class cadastrarEquipamento extends Component{
@@ -17,50 +18,20 @@ export class cadastrarEquipamento extends Component{
         }
     }
 
-    atualizarEstadoNumeroSerie = async (event) => {
+    cadastrarEquipamento = (event) => {
+        event.preventDefault();
+        axios.post('http://localhost:5000/api/equipamento/', {
+
+        })
+    }
+
+    atualizarStateCampo = async (event) => {
         await this.setState({
             NumeroSerie: event.target.value
         })
 
         console.log(this.state.NumeroSerie);
-    }
     
-    atualizarEstadoGateWay = async (event) => {
-        await this.setState({
-            Gateway: event.target.value
-        })
-
-        console.log(this.state.Gateway);
-    }
-
-    atualizarEstadoIP = async (event) => {
-        await this.setState({
-            IP: event.target.value
-        })
-
-        console.log(this.state.IP);
-    }
-
-    atualizarEstadoDNS = async (event) => {
-        await this.setState({
-            DNS: event.target.value
-        })
-
-        console.log(this.state.DNS);
-    }
-
-    atualizarEstadoPorta = async (event) => {
-        await this.setState({
-            Porta: event.target.value
-        })
-
-        console.log(this.state.Porta);
-    }
-
-   
-    CriarEquipamento = () => {
-        
-    }
 
     render() {
         return(

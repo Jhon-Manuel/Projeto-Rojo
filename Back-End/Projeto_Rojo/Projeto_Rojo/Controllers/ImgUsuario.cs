@@ -14,16 +14,15 @@ namespace Projeto_Rojo.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-        public class PerfilsController : ControllerBase
+        public class ImgUsuario : ControllerBase
         {
             private IUsuarioRepository _usuarioRepository { get; set; }
 
-            public PerfilsController() 
+            public ImgUsuario() 
             {
                 _usuarioRepository = new UsuarioRepository();
             }
 
-            
             [HttpPost("imagem/bd")]
             public IActionResult postBD(IFormFile arquivo)
             {

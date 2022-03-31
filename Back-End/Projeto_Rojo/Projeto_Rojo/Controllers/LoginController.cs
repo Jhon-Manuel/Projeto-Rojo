@@ -41,10 +41,6 @@ namespace Projeto_Rojo.Controllers
             EmpresaRepository empresa = new EmpresaRepository();
             FuncionarioRepository funcionario = new FuncionarioRepository();
 
-            string [] ArrayEmpresa;
-
-
-
             try
             {
                 Usuario b = _usuarioRepository.Login(login.Email, login.Senha);

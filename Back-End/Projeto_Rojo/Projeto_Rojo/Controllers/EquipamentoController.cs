@@ -20,12 +20,12 @@ namespace Projeto_Rojo.Controllers
             public class EquipamentoController : ControllerBase
             {
 
-                private IEquipamentoRepository _equipamentoRepository { get; set; }
+                private IEquipamentoRepository equipamentoRepository { get; set; }
 
 
                 public EquipamentoController()
                 {
-                     _equipamentoRepository = new EquipamentoRepository();
+                     equipamentoRepository = new EquipamentoRepository();
                 }
 
 
@@ -35,7 +35,7 @@ namespace Projeto_Rojo.Controllers
                     try
                     {
                         // Retorna a resposta da requisição fazendo a chamada para o método
-                        return Ok(_equipamentoRepository.Listar());
+                        return Ok(equipamentoRepository.Listar());
                     }
                     catch (Exception erro)
                     {
@@ -50,7 +50,7 @@ namespace Projeto_Rojo.Controllers
                     try
                     {
                         // Retora a resposta da requisição fazendo a chamada para o método
-                        return Ok(_equipamentoRepository.BuscarPorId(id));
+                        return Ok(equipamentoRepository.BuscarPorId(id));
                     }
                     catch (Exception erro)
                     {
@@ -65,7 +65,7 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                        _equipamentoRepository.Cadastrar(novoEvento);
+                        equipamentoRepository.Cadastrar(novoEvento);
 
                         return StatusCode(201);
                     }
@@ -82,7 +82,7 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                        _equipamentoRepository.Atualizar(eventoAtualizado);
+                        equipamentoRepository.Atualizar(eventoAtualizado);
 
                         return StatusCode(204);
                     }
@@ -99,7 +99,7 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                        _equipamentoRepository.Deletar(id);
+                        equipamentoRepository.Deletar(id);
 
                         return StatusCode(204);
                     }

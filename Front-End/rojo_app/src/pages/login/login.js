@@ -1,5 +1,7 @@
-import { Component, Consumer } from "react";
+import { Component } from "react";
+import { axios } from 'axios';
 import { Link } from "react-router-dom";
+import { red } from "jest-matcher-utils/node_modules/chalk";
 
 export default class Login extends Component{
     constructor(props){
@@ -7,15 +9,40 @@ export default class Login extends Component{
         this.state = {
             email : '',
             senha : '',
+            token : '',
+            erroMessage : '',
+            isLoading : false
         }
     }
 
     efetuarLogin = (event) => {
+
         event.preventDefault();
+
+        this.setState({erroMessage =''})
+
+        axios.post('http://localhost:5000/api/Login', {
+            email : this.state.email,
+            senha : this.state.senha
+        })
+        .then(response => {
+            if(response.status === 200){
+
+                localStorage.setItem('usuario-login', response.data.token)
+
+                console.log('Meu token é: ' + response.data.token)
+
+                this.setState({ isLoading : false })
+            }
+        })
+
+        .catch(() =>{
+            this.setState({ erroMessage : 'E-mail ou senha incorretos', isLoading : false})
+        })
     }
 
-    atualizaStateCampo = (event) => {
-        
+    atualizaStateCampo = (campo) => {
+        this.setState({ [campo.target.name] : campo.target.value })
     }
 
 
@@ -33,6 +60,7 @@ export default class Login extends Component{
                             name="email"
                             value={this.state.email}
                             onChange={this.atualizaStateCampo}
+                            onKeyUp={}
                             placeholder="Email"
                         /> 
                         <input
@@ -42,7 +70,23 @@ export default class Login extends Component{
                             onChange={this.atualizaStateCampo}
                             placeholder="Senha"
                         />
-                        <button type="submit">Logar</button>
+
+                        <p style={{ color : 'red'}}>{this.setState.erroMessage}</p>
+                        {
+                            this.state.isLoading === true &&
+                            <button type="submit" disable> Loading... </button> 
+                            
+                        }
+
+                        {
+                            this.state.isLoading === false &&
+                            <button
+                                type="submit"
+                                dissable={ this.state.email === '' || this.state.senha === '' ? 'none': ''}>
+                                Login
+                            </button>
+                        }
+                        
 
                     </form>
                 </section>
