@@ -38,7 +38,6 @@ namespace Projeto_Rojo.Repositories
 
             if (imagemUsuario != null)
             {
-                //Converte o valor de uma matriz de inteiros (array de binarios) em string.
                 return Convert.ToBase64String(imagemUsuario.Binario);
             }
 
@@ -53,7 +52,7 @@ namespace Projeto_Rojo.Repositories
             using (var ms = new MemoryStream())
             {
                
-                foto.CopyTo(ms);
+                foto.CopyTo(ms) ;
                
                 imagemUsuario.Binario = ms.ToArray();
                
@@ -79,7 +78,7 @@ namespace Projeto_Rojo.Repositories
                 ctx.Imagemusuarios.Update(fotoexistente);
             }
             else
-            {
+            { 
                 ctx.Imagemusuarios.Add(imagemUsuario);
             }
 
@@ -119,7 +118,7 @@ namespace Projeto_Rojo.Repositories
             return null;
 
         }
-
+         
         public void Atualizar(Usuario a)
         {
             Usuario b = ctx.Usuarios.Find(a);

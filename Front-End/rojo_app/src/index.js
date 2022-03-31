@@ -8,8 +8,9 @@ import Home from './pages/home/App';
 import {Equipamento} from './pages/equipamento/equipamento';
 import {Alerta} from './pages/alerta/alerta';
 import {ListaEquipamento} from './pages/listaEquipamento/listaEquipamento';
-import { Historico } from './pages/historico/historico';
-import Erro  from './pages/erro/erro'
+import {Historico} from './pages/historico/historico';
+import Erro  from './pages/erro/erro';
+import Login from './page/login/login';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -24,6 +25,7 @@ const routing  = (
         <Route path="/ListaEquipamento" component={ListaEquipamento}/>
         <Route path="/Historico" component={Historico}/>
         <Route path="/ListaEquipamento" component={Alerta}/>
+        <Route path="/Login" component={Login}/>
         <Route path="/Erro" component={Erro} />
         <Route
         path="*"

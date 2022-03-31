@@ -13,7 +13,9 @@ namespace Projeto_Rojo.Controllers
 {
     
             [Produces("application/json")]
+
             [Route("api/[controller]")]
+
             [ApiController]
             public class EquipamentoController : ControllerBase
             {
@@ -63,10 +65,8 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                // Faz a chamada para o método
                         _equipamentoRepository.Cadastrar(novoEvento);
 
-                        // Retorna um status code
                         return StatusCode(201);
                     }
                     catch (Exception ex)
@@ -82,10 +82,8 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                         // Faz a chamada para o método
                         _equipamentoRepository.Atualizar(eventoAtualizado);
 
-                        // Retorna um status code
                         return StatusCode(204);
                     }
                     catch (Exception ex)
@@ -101,10 +99,8 @@ namespace Projeto_Rojo.Controllers
                 {
                     try
                     {
-                        // Faz a chamada para o método
                         _equipamentoRepository.Deletar(id);
 
-                        // Retorna um status code
                         return StatusCode(204);
                     }
                     catch (Exception ex)

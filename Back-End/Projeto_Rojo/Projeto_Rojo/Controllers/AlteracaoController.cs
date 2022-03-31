@@ -11,16 +11,14 @@ using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Controllers
 {
-
-    
-        [Produces("application/json")]        
-        [Route("api/[controller]")]        
+        [Produces("application/json")]   
+        
+        [Route("api/[controller]")]       
+        
         [ApiController]        
-        public class AlteracaoController : ControllerBase      {
-             
-
+        public class AlteracaoController : ControllerBase      
+        {
             private IAlteracaoRepository _alteracaoRepository { get; set; }
-
             
             public AlteracaoController()
             {
@@ -33,7 +31,6 @@ namespace Projeto_Rojo.Controllers
             {
                 try
                 {
-                    // Retorna a resposta da requisição fazendo a chamada para o método
                     return Ok(_alteracaoRepository.Listar());
                 }
                 catch (Exception erro)
@@ -48,7 +45,6 @@ namespace Projeto_Rojo.Controllers
             {
                 try
                 {
-                    // Retora a resposta da requisição fazendo a chamada para o método
                     return Ok(_alteracaoRepository.BuscarPorId(id));
                 }
                 catch (Exception erro)
@@ -58,16 +54,15 @@ namespace Projeto_Rojo.Controllers
             }
 
             
-            [Authorize(Roles = "1")]
+   
             [HttpPost]
             public IActionResult Post(Alteracao novoEvento)
             {
                 try
                 {
-                // Faz a chamada para o método
-                _alteracaoRepository.Cadastrar(novoEvento);
 
-                    // Retorna um status code
+                    _alteracaoRepository.Cadastrar(novoEvento);
+
                     return StatusCode(201);
                 }
                 catch (Exception ex)
@@ -77,16 +72,16 @@ namespace Projeto_Rojo.Controllers
             }
 
             
-            [Authorize(Roles = "1")]
+   
             [HttpPut("{id}")]
             public IActionResult Put(int id, Alteracao eventoAtualizado)
             {
                 try
                 {
-                // Faz a chamada para o método
-                _alteracaoRepository.Atualizar(eventoAtualizado);
 
-                    // Retorna um status code
+                    _alteracaoRepository.Atualizar(eventoAtualizado);
+
+
                     return StatusCode(204);
                 }
                 catch (Exception ex)
@@ -96,16 +91,14 @@ namespace Projeto_Rojo.Controllers
             }
 
            
-            [Authorize(Roles = "1")]
+      
             [HttpDelete("{id}")]
             public IActionResult Delete(int id)
             {
                 try
                 {
-                // Faz a chamada para o método
-                _alteracaoRepository.Deletar(id);
+                    _alteracaoRepository.Deletar(id);
 
-                    // Retorna um status code
                     return StatusCode(204);
                 }
                 catch (Exception ex)

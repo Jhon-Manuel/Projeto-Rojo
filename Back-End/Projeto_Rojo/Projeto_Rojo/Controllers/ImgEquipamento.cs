@@ -24,19 +24,17 @@ namespace Projeto_Rojo.Controllers
             _equipamentoRepository = new EquipamentoRepository();
         }
 
-        [Authorize(Roles = "1,2")]
         [HttpPost("imagem/bd")]
         public IActionResult postBD(IFormFile arquivo)
         {
             try
             {
-                //analise de tamanho do arquivo.
-                if (arquivo.Length > 5000000) //5MB
+                if (arquivo.Length > 5000000)
                     return BadRequest(new { mensagem = "O tamanho máximo da imagem foi atingido." });
 
                 string extensao = arquivo.FileName.Split('.').Last();
 
-                //if (extensao != "png")
+                //if(extensao != "png")
                 //    return BadRequest(new { mensagem = "Apenas arquivos .png são permitidos." });
 
 
@@ -57,7 +55,6 @@ namespace Projeto_Rojo.Controllers
 
         }
 
-        [Authorize(Roles = "1,2")]
         [HttpGet("imagem/bd")]
         public IActionResult getbd()
         {
@@ -77,14 +74,12 @@ namespace Projeto_Rojo.Controllers
             }
         }
 
-        [Authorize(Roles = "1,2")]
         [HttpPost("imagem/dir")]
         public IActionResult postDIR(IFormFile arquivo)
         {
             try
             {
-                //analise de tamanho do arquivo.
-                if (arquivo.Length > 5000) //5MB
+                if (arquivo.Length > 5000) 
                     return BadRequest(new { mensagem = "O tamanho máximo da imagem foi atingido." });
 
                 string extensao = arquivo.FileName.Split('.').Last();
@@ -108,7 +103,6 @@ namespace Projeto_Rojo.Controllers
         }
 
 
-        [Authorize(Roles = "1,2")]
         [HttpGet("imagem/dir")]
         public IActionResult getDIR()
         {

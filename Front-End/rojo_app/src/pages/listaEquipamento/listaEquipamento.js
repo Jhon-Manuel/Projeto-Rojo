@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-export class ListaEquipamento extends Component{
+export default class ListaEquipamento extends Component{
     constructor(props){
         super(props)
         this.state = {

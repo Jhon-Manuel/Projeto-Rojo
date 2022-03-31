@@ -14,77 +14,155 @@ using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Controllers
 {
-   
-    
-        [Produces("application/json")]
 
 
-        [Route("api/[controller]")]
+    [Produces("application/json")]
 
 
-        [ApiController]
-        public class LoginController : ControllerBase
+    [Route("api/[controller]")]
+
+
+    [ApiController]
+    public class LoginController : ControllerBase
+    {
+        private IUsuarioRepository _usuarioRepository { get; set; }
+
+        bool EFexistente;
+
+        public LoginController()
         {
-            private IUsuarioRepository _usuarioRepository { get; set; }
+            _usuarioRepository = new UsuarioRepository();
+        }
 
-            public LoginController()
+        [HttpPost]
+        public IActionResult Login (LoginViewModel login)
+        {
+            
+            EmpresaRepository empresa = new EmpresaRepository();
+            FuncionarioRepository funcionario = new FuncionarioRepository();
+
+            string [] ArrayEmpresa;
+
+
+
+            try
             {
-                _usuarioRepository = new UsuarioRepository();
-            }
+                Usuario b = _usuarioRepository.Login(login.Email, login.Senha);
+
+                if (b == null)
+                {
+                    return NotFound("Email ou senha inválidos");
+                }
+
+                Empresa Empresa = new Empresa();
+                Funcionario Funcionario = new Funcionario();
 
 
-            [HttpPost]
-            public IActionResult Login(LoginViewModel login)
+                Empresa = empresa.Listar()
+                    .Select(e => new Empresa()
+                    {
+                        IdEmpresa = e.IdEmpresa,
+                        IdUsuario = e.IdUsuario,
+
+                        IdUsuarioNavigation = new Usuario()
+                        {
+                            IdUsuario = e.IdUsuarioNavigation.IdUsuario,
+                            Email = e.IdUsuarioNavigation.Email,
+                        }
+                    })
+                    .FirstOrDefault(e => b.IdUsuario == e.IdUsuario);
+
+
+                Funcionario = funcionario.Listar()
+                    .Select(f => new Funcionario()
+                    {
+                        IdFuncionario = f.IdFuncionario,
+                        IdUsuario = f.IdUsuario,
+
+                        IdUsuarioNavigation = new Usuario()
+                        {
+                            IdUsuario = f.IdUsuarioNavigation.IdUsuario,
+                            Email = f.IdUsuarioNavigation.Email,
+                        }
+                    })
+                    .FirstOrDefault(e => b.IdUsuario == e.IdUsuario);
+
+                if (Empresa != null && Funcionario == null)
+                {
+                    EFexistente = true;
+                }
+                else if (Empresa == null && Funcionario != null)
+                {
+                    EFexistente = false;
+                }
+
+                switch (EFexistente)
+                {
+                    case true:
+                        var minhasClaimsE = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Email, b.Email),
+                            new Claim(JwtRegisteredClaimNames.Jti, b.IdUsuario.ToString()),
+                            new Claim(ClaimTypes.Role, Empresa.IdEmpresa.ToString())
+                        };
+
+                        var keyE = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("rojo-chave-empresa"));
+
+                        var credsE = new SigningCredentials(keyE, SecurityAlgorithms.HmacSha256);
+
+                        var meuTokenE = new JwtSecurityToken(
+                                issuer: "RojoEmpresa.webAPI",
+                                audience: "RojoEmpresa.webAPI",
+                                claims: minhasClaimsE,
+                                expires: DateTime.Now.AddHours(2),
+                                signingCredentials: credsE
+                            );
+
+                        return Ok(new
+                        {
+                            token = new JwtSecurityTokenHandler().WriteToken(meuTokenE)
+
+                        });
+
+
+                    case false:
+
+                        var minhasClaimsF = new[]
+                        {
+                            new Claim(JwtRegisteredClaimNames.Email, b.Email),
+                            new Claim(JwtRegisteredClaimNames.Jti, b.IdUsuario.ToString()),
+                            new Claim(ClaimTypes.Role, Funcionario.IdFuncionario.ToString())
+                        };
+
+                        var keyF = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("rojo-chave-funcionario"));
+
+                        var credsF = new SigningCredentials(keyF, SecurityAlgorithms.HmacSha256);
+
+                        var meuTokenF = new JwtSecurityToken(
+                                issuer: "RojoFuncionario.webAPI",
+                                audience: "RojoFuncionario.webAPI",
+                                claims: minhasClaimsF,
+                                expires: DateTime.Now.AddHours(5),
+                                signingCredentials: credsF
+                            );
+
+                        return Ok(new
+                        {
+                            token = new JwtSecurityTokenHandler().WriteToken(meuTokenF)
+                        });
+
+                
+
+                } }
+
+
+            catch (Exception ex)
             {
-                try
-                {
-                    Usuario usuarioBuscado = _usuarioRepository.Login(login.Email, login.Senha);
-
-                    if (usuarioBuscado == null)
-                    {
-                        return NotFound("E-mail ou senha inválidos!");
-                    }
-
-                    // Caso o usuário seja encontrado, prossegue para a criação do token
-
-                    /*
-                        Dependências
-                        Criar e validar o JWT:      System.IdentityModel.Tokens.Jwt
-                        Integrar a autenticação:    Microsoft.AspNetCore.Authentication.JwtBearer (versão compatível com o .NET do projeto)
-                    */
-
-                    var minhasClaims = new[]
-                    {
-                    new Claim(JwtRegisteredClaimNames.Email, usuarioBuscado.Email),
-                    new Claim(JwtRegisteredClaimNames.Jti, usuarioBuscado.IdUsuario.ToString()),
-                    new Claim(ClaimTypes.Role, usuarioBuscado.IdTipoUsuario.ToString()),
-                    new Claim( "role", usuarioBuscado.IdTipoUsuario.ToString() ),
-                     // Armazena na Claim o nome do usuário que foi autenticado
-                    new Claim(JwtRegisteredClaimNames.Name, usuarioBuscado.NomeUsuario)
-                };
-
-                    var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("gufi-chave-autenticacao"));
-
-                    var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-                    var meuToken = new JwtSecurityToken(
-                            issuer: "gufi.webAPI",
-                            audience: "gufi.webAPI",
-                            claims: minhasClaims,
-                            expires: DateTime.Now.AddMinutes(30),
-                            signingCredentials: creds
-                        );
-
-                    return Ok(new
-                    {
-                        token = new JwtSecurityTokenHandler().WriteToken(meuToken)
-                    });
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex);
-                }
+                return BadRequest(ex);
             }
         }
+
     }
+            
+ }
 

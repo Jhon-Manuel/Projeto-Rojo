@@ -1,15 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Projeto_Rojo
 {
@@ -19,28 +18,57 @@ namespace Projeto_Rojo
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                 {
+                     options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                 });
 
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",
                                 builder =>
                                 {
-                                    builder.WithOrigins("http://localhost:3000")
+                                    builder.AllowAnyOrigin()
                                     .AllowAnyHeader()
                                     .AllowAnyMethod();
                                 });
             });
 
-            services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(options =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Rojo.webAPI" });
+                options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Rojo.webAPI" });
 
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
+                // using System.Reflection;
+                // var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                // options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
             });
+
+            services
+                .AddAuthentication(options =>
+                {
+                    options.DefaultAuthenticateScheme = "JwtBearer";
+                    options.DefaultChallengeScheme = "JwtBearer";
+                })
+                .AddJwtBearer("JwtBearer", options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("rojo-chave-empresa")),
+                        ClockSkew = TimeSpan.FromHours(2),
+                        ValidIssuer = "RojoEmpresa.webAPI",
+                        ValidAudience = "RojoEmpresa.webAPI",
+                    };
+                });
+
+
+
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,7 +79,6 @@ namespace Projeto_Rojo
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
 
             app.UseSwagger();
 
@@ -60,6 +87,14 @@ namespace Projeto_Rojo
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rojo.webAPI");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseRouting();
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
