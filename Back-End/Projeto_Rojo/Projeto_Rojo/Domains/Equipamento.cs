@@ -9,7 +9,8 @@ namespace Projeto_Rojo.Domains
     {
         public Equipamento()
         {
-            Imagemequipamentos = new HashSet<Imagemequipamento>();
+            Alerta = new HashSet<Alerta>();
+            ImgEquipamentos = new HashSet<ImgEquipamento>();
         }
 
         public int IdEquipamento { get; set; }
@@ -22,10 +23,12 @@ namespace Projeto_Rojo.Domains
         public int? Dns { get; set; }
         public int? Porta { get; set; }
         public DateTime DataEntrada { get; set; }
+        public byte[] Condicao { get; set; }
         public string Descricao { get; set; }
 
-        public virtual Tipoequipamento IdTipoEquipamentoNavigation { get; set; }
+        public virtual TipoEquipamento IdTipoEquipamentoNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; }
-        public virtual ICollection<Imagemequipamento> Imagemequipamentos { get; set; }
+        public virtual ICollection<Alerta> Alerta { get; set; }
+        public virtual ICollection<ImgEquipamento> ImgEquipamentos { get; set; }
     }
 }

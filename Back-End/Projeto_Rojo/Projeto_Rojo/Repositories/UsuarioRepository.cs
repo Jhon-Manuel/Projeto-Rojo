@@ -13,17 +13,7 @@ namespace Projeto_Rojo.Repositories
 {
     public class UsuarioRepository : IUsuarioRepository
     {
-        private readonly RojoContext ctx;
-
-        public UsuarioRepository()
-        {
-
-        }
-
-        public UsuarioRepository(RojoContext appContext)
-        {
-            ctx = appContext;
-        }
+        RojoContext ctx = new RojoContext();     
 
         public Usuario Login(string email, string senha)
         {
@@ -32,13 +22,13 @@ namespace Projeto_Rojo.Repositories
 
         public string ConsultarPerfilBD(int id_usuario)
         {
-            Imagemusuario imagemUsuario = new Imagemusuario();
+            ImgUsuario ImgUsuario = new ImgUsuario();
 
-            imagemUsuario = ctx.Imagemusuarios.FirstOrDefault(i => i.IdUsuario == id_usuario);
+            ImgUsuario = ctx.ImgUsuarios.FirstOrDefault(i => i.IdUsuario == id_usuario);
 
-            if (imagemUsuario != null)
+            if (ImgUsuario != null)
             {
-                return Convert.ToBase64String(imagemUsuario.Binario);
+                return Convert.ToBase64String(ImgUsuario.Binario);
             }
 
             return null;
@@ -47,39 +37,39 @@ namespace Projeto_Rojo.Repositories
         public void SalvarPerfilBD(IFormFile foto, int id_usuario)
         {
             
-            Imagemusuario imagemUsuario = new Imagemusuario();
+            ImgUsuario ImgUsuario = new ImgUsuario();
 
             using (var ms = new MemoryStream())
             {
                
                 foto.CopyTo(ms) ;
                
-                imagemUsuario.Binario = ms.ToArray();
+                ImgUsuario.Binario = ms.ToArray();
                
-                imagemUsuario.NomeArquivo = foto.FileName;
+                ImgUsuario.NomeArquivo = foto.FileName;
                
-                imagemUsuario.MimeType = foto.FileName.Split('.').Last();
+                ImgUsuario.MimeType = foto.FileName.Split('.').Last();
              
-                imagemUsuario.IdUsuario = id_usuario;
+                ImgUsuario.IdUsuario = id_usuario;
             }
 
             
-            Imagemusuario fotoexistente = new Imagemusuario();
-            fotoexistente = ctx.Imagemusuarios.FirstOrDefault(i => i.IdUsuario == id_usuario);
+            ImgUsuario fotoexistente = new ImgUsuario();
+            fotoexistente = ctx.ImgUsuarios.FirstOrDefault(i => i.IdUsuario == id_usuario);
 
             if (fotoexistente != null)
             {
-                fotoexistente.Binario = imagemUsuario.Binario;
-                fotoexistente.NomeArquivo = imagemUsuario.NomeArquivo;
-                fotoexistente.MimeType = imagemUsuario.MimeType;
+                fotoexistente.Binario = ImgUsuario.Binario;
+                fotoexistente.NomeArquivo = ImgUsuario.NomeArquivo;
+                fotoexistente.MimeType = ImgUsuario.MimeType;
                 fotoexistente.IdUsuario = id_usuario;
 
               
-                ctx.Imagemusuarios.Update(fotoexistente);
+                ctx.ImgUsuarios.Update(fotoexistente);
             }
             else
             { 
-                ctx.Imagemusuarios.Add(imagemUsuario);
+                ctx.ImgUsuarios.Add(ImgUsuario);
             }
 
            
@@ -141,16 +131,13 @@ namespace Projeto_Rojo.Repositories
 
         public Usuario Cadastrar(Usuario a)
         {
-            if (a != null)
-            {
+
                 ctx.Usuarios.Add(a);
 
                 ctx.SaveChanges();
 
                 return a;
-            }
-
-            return null;
+           
         }
 
 

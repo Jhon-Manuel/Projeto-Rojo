@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Projeto_Rojo.Domains
 {
-    public partial class Imagemusuario
+    public partial class ImgUsuario
     {
         public int IdImg { get; set; }
         public int IdUsuario { get; set; }

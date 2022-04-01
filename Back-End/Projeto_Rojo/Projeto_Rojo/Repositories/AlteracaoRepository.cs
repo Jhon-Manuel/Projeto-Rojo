@@ -11,18 +11,9 @@ namespace Projeto_Rojo.Repositories
 {
     public class AlteracaoRepository : IAlteracaoRepository
     {
-        private readonly RojoContext ctx;
+        RojoContext ctx = new RojoContext();
 
-        public AlteracaoRepository()
-        {
-
-        }
-
-        public AlteracaoRepository(RojoContext rojoContext)
-        {
-            ctx = rojoContext;    
-        }
-        
+               
        
         public void Atualizar(Alteracao a)
         {
@@ -46,16 +37,13 @@ namespace Projeto_Rojo.Repositories
 
         public Alteracao Cadastrar(Alteracao a)
         {
-            if (a != null)
-            {
+    
                 ctx.Alteracaos.Add(a);
 
                 ctx.SaveChanges();
 
-                return a;
-            }
-
-            return null;
+            return a;
+     
         }
 
 

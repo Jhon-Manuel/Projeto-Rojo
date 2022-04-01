@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Interfaces
 {
-    interface IEmpresaRepository
+    interface ITipoUsuarioRepository
     {
-        IEnumerable<Empresa> Listar();
+        IEnumerable<TipoUsuario> Listar();
 
-        Empresa BuscarPorId(int id);
+        TipoUsuario BuscarPorId(int id);
 
-        Empresa Cadastrar(Empresa e);
+        TipoUsuario Cadastrar(TipoUsuario e);
 
-        void Atualizar(Empresa e);
+        void Atualizar(TipoUsuario e);
 
         void Deletar(int id);
     }

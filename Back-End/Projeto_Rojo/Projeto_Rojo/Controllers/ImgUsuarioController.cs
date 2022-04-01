@@ -14,11 +14,11 @@ namespace Projeto_Rojo.Controllers
     [Route("api/[controller]")]
     [ApiController]
     
-        public class ImgUsuario : ControllerBase
+        public class ImgUsuarioController : ControllerBase
         {
             private IUsuarioRepository _usuarioRepository { get; set; }
 
-            public ImgUsuario() 
+            public ImgUsuarioController() 
             {
                 _usuarioRepository = new UsuarioRepository();
             }

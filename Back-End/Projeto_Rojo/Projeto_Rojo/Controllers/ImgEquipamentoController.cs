@@ -15,11 +15,11 @@ namespace Projeto_Rojo.Controllers
 
     [ApiController]
 
-    public class ImgEquipamento : ControllerBase
+    public class ImgEquipamentoController : ControllerBase
     {
         private IEquipamentoRepository _equipamentoRepository { get; set; }
 
-        public ImgEquipamento()
+        public ImgEquipamentoController()
         {
             _equipamentoRepository = new EquipamentoRepository();
         }

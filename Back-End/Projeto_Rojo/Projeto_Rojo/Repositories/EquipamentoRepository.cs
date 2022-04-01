@@ -13,27 +13,17 @@ namespace Projeto_Rojo.Repositories
 {
     public class EquipamentoRepository : IEquipamentoRepository
     {
-        private readonly RojoContext ctx;
-
-        public EquipamentoRepository()
-        {
-
-        }
-
-        public EquipamentoRepository(RojoContext rojoContext)
-        {
-            ctx = rojoContext;
-        }
+        RojoContext ctx = new RojoContext();
 
         public string ConsultarPerfilBD(int id_e)
         {
-            Imagemequipamento imagemEquipamento = new Imagemequipamento();
+            ImgEquipamento ImgEquipamento = new ImgEquipamento();
 
-            imagemEquipamento = ctx.Imagemequipamentos.FirstOrDefault(i => i.IdEquipamento == id_e);
+            ImgEquipamento = ctx.ImgEquipamentos.FirstOrDefault(i => i.IdEquipamento == id_e);
 
-            if (imagemEquipamento != null)
+            if (ImgEquipamento != null)
             {
-                return Convert.ToBase64String(imagemEquipamento.Binario);
+                return Convert.ToBase64String(ImgEquipamento.Binario);
             }
 
             return null;
@@ -42,7 +32,7 @@ namespace Projeto_Rojo.Repositories
         public void SalvarPerfilBD(IFormFile foto, int id_e)
         {
 
-            Imagemequipamento imgEquipamento = new Imagemequipamento();
+            ImgEquipamento imgEquipamento = new ImgEquipamento();
 
             using (var ms = new MemoryStream())
             {
@@ -59,8 +49,8 @@ namespace Projeto_Rojo.Repositories
             }
 
 
-            Imagemequipamento fotoexistente = new Imagemequipamento();
-            fotoexistente = ctx.Imagemequipamentos.FirstOrDefault(i => i.IdEquipamento == id_e);
+            ImgEquipamento fotoexistente = new ImgEquipamento();
+            fotoexistente = ctx.ImgEquipamentos.FirstOrDefault(i => i.IdEquipamento == id_e);
 
             if (fotoexistente != null)
             {
@@ -70,11 +60,11 @@ namespace Projeto_Rojo.Repositories
                 fotoexistente.IdEquipamento = id_e;
 
 
-                ctx.Imagemequipamentos.Update(fotoexistente);
+                ctx.ImgEquipamentos.Update(fotoexistente);
             }
             else
             {
-                ctx.Imagemequipamentos.Add(imgEquipamento);
+                ctx.ImgEquipamentos.Add(imgEquipamento);
             }
 
 
@@ -136,16 +126,12 @@ namespace Projeto_Rojo.Repositories
 
         public Equipamento Cadastrar(Equipamento e)
         {
-            if (e != null)
-            {
+ 
                 ctx.Equipamentos.Add(e);
 
                 ctx.SaveChanges();
 
                 return e;
-            }
-
-            return null;
         }
 
 

@@ -10,7 +10,7 @@ import {Alerta} from './pages/alerta/alerta';
 import {ListaEquipamento} from './pages/listaEquipamento/listaEquipamento';
 import {Historico} from './pages/historico/historico';
 import Erro  from './pages/erro/erro';
-import Login from './page/login/login';
+import {Login} from './pages/login/login';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -19,7 +19,7 @@ const routing  = (
   <Router>
     <div>
       <Routes>
-        <Route path="/" component={Home}/>
+        <Route exact path="/" component={Home}/>
         <Route path="/Equipamento" component={Equipamento}/>
         <Route path="/Alerta" component={Alerta}/>
         <Route path="/ListaEquipamento" component={ListaEquipamento}/>

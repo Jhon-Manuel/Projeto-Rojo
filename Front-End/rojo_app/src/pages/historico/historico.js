@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-export class Historico extends Component{
+export default class Historico extends Component{
     constructor(props){
         super(props);
         this.state = {

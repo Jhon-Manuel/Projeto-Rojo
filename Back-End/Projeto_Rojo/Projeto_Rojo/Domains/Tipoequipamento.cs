@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace Projeto_Rojo.Domains
 {
-    public partial class Tipoequipamento
+    public partial class TipoEquipamento
     {
-        public Tipoequipamento()
+        public TipoEquipamento()
         {
             Equipamentos = new HashSet<Equipamento>();
         }

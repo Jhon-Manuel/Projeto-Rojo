@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-export class Alerta extends Component{
+export default class Alerta extends Component{
     constructor(props){
         super(props);
         this.state = {
