@@ -9,20 +9,16 @@ using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Repositories
 {
-    public class TipoUsuarioRepository : ITipoUsuarioRepository
+    public class TipoUsuarioRepository : ITipoUsuarioRepository  
     {
-        private readonly RojoContext ctx;
+        RojoContext ctx = new RojoContext();
 
-        public TipoUsuarioRepository(RojoContext rojoContext)
-        {
-            ctx = rojoContext;
-        }
+       // private readonly RojoContext ctx;
 
-        public TipoUsuarioRepository()
-        {
-
-        }
-
+       // public TipoUsuarioRepository(RojoContext rojoContext)
+       // {
+       //     ctx = rojoContext;
+       // }
  
         public void Atualizar(TipoUsuario a)
         {

@@ -38,7 +38,7 @@ export default function ListaEquipamento (){
                             <p>{item.tipoEquipamento}</p>
                             <p>{item.Modelo}</p>
                             <p>{item.NumeroSerie}</p>
-                            <img src={{}}"}></img>
+                            <img src={{}}></img>
                         </div>
                         )} 
                     </section>
@@ -48,4 +48,3 @@ export default function ListaEquipamento (){
     }
     
     
-}

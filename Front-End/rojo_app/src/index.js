@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Navigate, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import './index.css';
 
 import Home from './pages/home/App';
 import {Equipamento} from './pages/equipamento/equipamento';
-import {Alerta} from './pages/alerta/alerta';
-import {ListaEquipamento} from './pages/listaEquipamento/listaEquipamento';
-import {Historico} from './pages/historico/historico';
+import Alerta from './pages/alerta/Alerta';
+import ListaEquipamento from './pages/listaEquipamento/listaEquipamento';
+import Historico from './pages/historico/historico';
 import Erro  from './pages/erro/erro';
-import {Login} from './pages/login/login';
+import Login from './pages/login/login';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -18,7 +18,7 @@ import reportWebVitals from './reportWebVitals';
 const routing  = (
   <Router>
     <div>
-      <Routes>
+      <Switch>
         <Route exact path="/" component={Home}/>
         <Route path="/Equipamento" component={Equipamento}/>
         <Route path="/Alerta" component={Alerta}/>
@@ -27,11 +27,11 @@ const routing  = (
         <Route path="/ListaEquipamento" component={Alerta}/>
         <Route path="/Login" component={Login}/>
         <Route path="/Erro" component={Erro} />
-        <Route
+        {/*<Route
         path="*"
         element={<Navigate to="/Erro" replace />}
-    />
-      </Routes>
+        />*/}
+      </Switch>
     </div>
   </Router>
 );

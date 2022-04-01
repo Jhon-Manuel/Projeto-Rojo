@@ -1,15 +1,15 @@
 import { Component } from "react";
-import { PythonShell } from 'python-shell';
 import axios from "axios";
 
-PythonShell.runString(
+{/*import { PythonShell } from 'python-shell';*/}
+{/*PythonShell.runString(
     'from tkinter import *;Tk().mainloop()',
     null,
     function (err) {
         if (err) throw err;
         console.log('finishid');
     }
-);
+);*/}
 
 export class Equipamento extends Component{
     constructor(props){
@@ -28,7 +28,7 @@ export class Equipamento extends Component{
         event.preventDefault();
         
         axios.get('http://localhost:5000/api/equipamento/', {
-            Modelo : 
+            Modelo : event.Modelo
         })
     }
 

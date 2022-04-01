@@ -15,12 +15,12 @@ namespace Projeto_Rojo.Controllers
     public class TipoUsuarioController : ControllerBase
     {
         private ITipoUsuarioRepository tipoUsuarioRepository { get; set; }
+       
 
         public TipoUsuarioController()
         {
             tipoUsuarioRepository = new TipoUsuarioRepository();
         }
-
 
         [HttpGet]
         public IActionResult Get()

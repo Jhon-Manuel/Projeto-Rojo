@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using Projeto_Rojo.Contexts;
+using Projeto_Rojo.Interfaces;
+using Projeto_Rojo.Repositories;
 using System;
 using System.IO;
 using System.Reflection;
@@ -66,6 +70,8 @@ namespace Projeto_Rojo
                     };
                 });
 
+            services.AddTransient<DbContext, RojoContext>();
+            services.AddTransient<ITipoUsuarioRepository, TipoUsuarioRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

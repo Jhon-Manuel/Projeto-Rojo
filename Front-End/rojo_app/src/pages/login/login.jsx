@@ -1,13 +1,12 @@
 import { Component } from "react";
 import { axios } from 'axios';
-import { Link } from "react-router-dom";
-import { red } from "jest-matcher-utils/node_modules/chalk";
+import { parseJwt } from "../../services/auth";
 
 import Logo from '../../assets/img/logoRojo.png'
 
 import '../../assets/css/login.css'
 
-class Login extends Component{
+export default class Login extends Component{
     constructor(props){
         super(props);
         this.state = {
@@ -41,12 +40,27 @@ class Login extends Component{
                 let base64 = localStorage.getItem('usuario-login').split('.')[1]; 
 
                 JSON.parse(window.atob(base64))
+
+                parseJwt().role;
+
+                
+
+                if(parseJwt().Role === '1') {
+                    this.props.history.push('/equipamento')
+                }
+                else{
+                    this.props.history.goBack('/');
+                }
             }
         })
 
         .catch(() =>{
             this.setState({ erroMessage : 'E-mail ou senha incorretos', isLoading : false})
         })
+    }
+
+    efetuarLogout = (campo) => {
+        
     }
 
     atualizaStateCampo = (campo) => {
@@ -117,4 +131,3 @@ class Login extends Component{
     }
 
 }
-export default Login;

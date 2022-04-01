@@ -14,8 +14,6 @@ using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Controllers
 {
-
-
     [Produces("application/json")]
 
 

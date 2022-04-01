@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import './App.css';
 
 import logo from  '../../assets/img/logoRojo.png'
@@ -7,12 +9,12 @@ function App() {
     <div className="App">
       <header className="App-header">
         <div className="container">
-          <img src={logo} alt="Logo Rojo"/>
 
           <nav className="cabecalhoPrincipal-nav">
-            {
-              <a className='cabecalhoPrincipal-nav-login' href="/Login">Login</a>
-            }
+            
+              <Link className="BoxLogo" to="/" img src={logo}></Link>
+              <Link className="cabecalhoPrincipal-nav-login" to="/Login">Login</Link>
+      
           </nav>
         </div>
       </header>
