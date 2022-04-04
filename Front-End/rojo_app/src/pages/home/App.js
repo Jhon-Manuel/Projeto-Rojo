@@ -22,27 +22,30 @@ function App() {
       </header>
 
       <main>
-        <div classNmae="container-home">
+        <div className="master">
 
-          <div className='home-banner'>
-              <div className='home-info'>
-                <div className='info-text'>
-                  <h1>Rojo infraestrutura</h1>
-                  <p>
-                    Incie sua organização empresarial pelas bases do seu negócio.
-                    Com uma infraestrutura a  distância de um dedo.
-                  </p>
-                  <nav>
-                    <div className='info-text-p'>
-                      INICIAR
+          <div classNmae="container-home">
 
-                    </div>
-                  </nav>
+            <div className='home-banner'>
+                <div className='home-info'>
+                  <div className='info-text'>
+                    <h1>Rojo infraestrutura</h1>
+                    <p>
+                      Incie sua organização empresarial pelas bases do seu negócio.
+                      Com uma infraestrutura a  distância de um dedo.
+                    </p>
+                    <nav>
+                      <div className='info-text-p'>
+                        INICIAR
 
+                      </div>
+                    </nav>
+
+                  </div>
+                  <div className='home-img'/>
                 </div>
-                <div className='home-img'/>
-              </div>
-          </div>
+            </div>
+        </div>
 
         
           <div className='container-app'>

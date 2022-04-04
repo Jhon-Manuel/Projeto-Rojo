@@ -53,34 +53,38 @@
 /* ------------------ MAIN */
 
 
+.master{
+  position: absolute;
+  z-index: 0;
+}
+
 .home-banner{
   height: 1200px;
   width: 100vmax;
   display: flex;
   justify-content:center;
   background: radial-gradient(105.62% 65.06% at 103.26% 93.6%, #6E0912 2.86%, #870C18 5.68%, #5D0C14 31.96%, #30090D 68.03%, #0D0002 94.8%);
-  
 }
 
 .home-info{
   width: 80%;
   height: 655px;
-  /*background-color: aqua;*/
+  background-color: aqua;
+  
   display: flex;
   justify-content: space-between;
   margin-top: 100px;
   align-items: center;
-  
 
 }
 
 .info-text{
-  margin-top: 60px;
-  width: 764px;
+  margin-top: 80px;
+  width: 534px;
   height: 655px;
-  font-size: 28px;
+  font-size: 20px;
   color: white;
-  /*background-color: blue;*/
+  background-color: blue;
   font-family: 'Open Sans', sans-serif;
   
 }
@@ -96,13 +100,14 @@
   text-align: center;
   align-items: center;
   font-family: 'Open Sans', sans-serif;
+
   
 }
 .info-text nav{
-  height: 68px;
-  width: 200px;
+  height: 58px;
+  width: 150px;
   margin-top: 100px;
-  border-radius: 10px;
+  border-radius: 5px;
   background-color: #FF0303;
   display: flex;
   justify-content: center;
@@ -110,9 +115,10 @@
 
 
 .home-img{
-  margin-right: 180px ;
-  width: 750px;
-  height: 417px;
+  margin-right: 50px ;
+  margin-bottom: 150px;
+  width: 550px;
+  height: 217px;
   background-image: url(../../assets/img/infra.png);
   background-repeat: no-repeat;
   background-size: cover;
@@ -125,8 +131,7 @@
   background-color:cornflowerblue;
   display: flex;
   justify-content: space-between;
-  position: absolute;
-  z-index: 0;
+  
   
 }
 

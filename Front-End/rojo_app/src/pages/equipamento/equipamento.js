@@ -4,6 +4,11 @@ import { Link } from "react-router-dom";
 
 import '../../assets/css/barra-esquerda.css';
 
+
+import Filtro from '../../assets/icon/icon-filtro.png';
+import Editar from '../../assets/icon/icon-editar.png';
+import Ferramenta from '../../assets/icon/icon-ferramenta.png';
+
 import Logo from '../../assets/img/logoRojo.png';
 import Sair from '../../assets/icon/icon-sair.png';
 import Linq from '../../assets/icon/icon-link.png';
@@ -14,28 +19,32 @@ import ho from '../../assets/icon/historico.png';
 import la from '../../assets/icon/lista.png';
 import ta from '../../assets/icon/topologia.png';
 import aa from '../../assets/icon/alerta.png';
-import po from '../../assets/icon/palito.png';
+
+import '../../assets/css/barra-esquerda.css';
+import '../../assets/css/equipamento.css';
 
 
-
-import Filtro from '../../assets/icon/icon-filtro.png';
-import Editar from '../../assets/icon/icon-editar.png';
-import Ferramenta from '../../assets/icon/icon-ferramenta.png';
-
-//import BarraEsquerda from "../../components/barraEsquerda.js";
 
 export default class Equipamento extends Component{
     constructor(props){
         super(props)
         this.state = {
-            nome : '',
+            nome : 'Taina Silva',
+            cargo : 'Supervisora de Infraestrutura',
            listaEquipamento : [],
-           Modelo : 0,
+           Modelo : 'Switch',
            NumeroSerie : 0,
+           Gateway: 0,
            IP : 0,
+           DNS : 0,
+           Porta : 0,
            img64 : '',
            arquivo: null,
            titulosecao : 'Equipamento',
+           atualizar : false,
+
+           dataModificacao : new Date,
+           descricaoModificacao : '',
         }
     }
 
@@ -73,13 +82,21 @@ export default class Equipamento extends Component{
         .then(console.log("Arquivo Enviado"))
     }
 
+    atualizaStateCampo = (campo) => {
+        this.setState({ [campo.target.name] : campo.target.value })
+    }
 
+    atualizaEquipamento = (campo) => {
+        campo.preventDefault();
 
-
+        axios
+        .put('')
+    }
 
     render(){
         return(
             <div className="container">
+                <div>
                 <div className="barra-esquerda">
                         <div className="container-barra">
                             <nav className="Logo">
@@ -187,6 +204,7 @@ export default class Equipamento extends Component{
                             </div>
     
                 </div>
+            </div>
                 <div className="conteudo-equipamento">
 
                     <header>
@@ -194,33 +212,128 @@ export default class Equipamento extends Component{
                     </header>
                 
                     <section>
-                        <div className="barra-direita">
-                            <button>
-                                <img src={Editar} alt="icone filtro"/>
-                            </button>
+                        <div className="container-direita">
+                            <div className="barra-direita">
+                                <div className="button">
 
-                            <button
-                                onClick={this.alterarCondicao}
-                            >
-                            <img src={Filtro} alt="icone editar"/>
-                        
-                            </button>
+                                    <button>
+                                        <img src={Editar} alt="icone filtro"/>
+                                    </button>
 
-                            <button>
-                                <img src={Ferramenta} alt="Icone ferramenta"/>
-                            </button>
+                                    <button
+                                        onClick={this.alterarCondicao}
+                                    >
+                                    <img src={Filtro} alt="icone editar"/>
+                                
+                                    </button>
+
+                                    <button>
+                                        <img src={Ferramenta} alt="Icone ferramenta"/>
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </section>
 
                     <section>
                             
-                            <div>
-                                <div>
+                            <div className="container-info-equipamento">
+                                <div className="con-equi-info">
+                                    <div className="head-equi-info">
+                                        <p>Dados {this.state.Modelo}</p>
+                                    </div>
+                                    <div className="container-box-info-dados">
+
+                                        <div className="container-info-dados">
+
+                                            <form onSubmit={this.atualizaEquipamento}>
+                                                <div className="info-1">
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="Modelo"
+                                                        value={this.state.Modelo}
+                                                        placeholder="Modelo"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="NumeroSerie"
+                                                        value={this.state.Modelo}
+                                                        placeholder="Numero de Série"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="modelo"
+                                                        value={this.state.Modelo}
+                                                        placeholder="IP"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="img64"
+                                                        value={this.state.Modelo}
+                                                        placeholder="imagem equipamento"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="modelo"
+                                                        value={this.state.Modelo}
+                                                        placeholder="Modelo"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+                                                </div>
+                                                <div className="info-2">
+
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="descricao"
+                                                        value={this.state.descricao}
+                                                        placeholder="Descricao"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+                                                    <input
+                                                        className="input"
+                                                        type="text"
+                                                        name="modelo"
+                                                        value={this.state.Modelo}
+                                                        placeholder="Modelo"
+                                                        onChange={this.atualizaStateCampo}
+                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                    /> 
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div className="container-img">
+                                            <div className="box-img" />
+
+                                            <input type="file"/>
+                                            <button onClick={this.upload }>Enviar</button>
+                                        </div>
+                                    </div>
+
+
 
                                 </div>
-                                <input type="file"/>
-                                <button onClick={this.upload }>Enviar</button>
-                                <input src="" alt="Imagem de perfil"/>
                             </div>
                     </section>
         
