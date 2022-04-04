@@ -1,38 +1,169 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway", "Open Sans", Arial, Helvetica, sans-serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+/* ------------------ HEADER */
 
 .App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+  background-color: black;
+  width: 100vmax;
+  height: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  color: white;
+  position: absolute;
+  z-index: 0;
+}
+
+.cabecalhoPrincipal-nav{
+  width: 80vw;
+  height: 64px;
+  /*background-color: #61dafb;*/
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.cabecalhoPrincipal-nav-login{
+  width: 130px;
+  height: 34px;
+  border: 1px solid #FFFFFF;
+  border-radius: 5px;
+  text-decoration: none;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.text-login{
+  height: 36px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+
+
+/* ------------------ MAIN */
+
+
+.home-banner{
+  height: 1200px;
+  width: 100vmax;
+  display: flex;
+  justify-content:center;
+  background: radial-gradient(105.62% 65.06% at 103.26% 93.6%, #6E0912 2.86%, #870C18 5.68%, #5D0C14 31.96%, #30090D 68.03%, #0D0002 94.8%);
+  
 }
+
+.home-info{
+  width: 80%;
+  height: 655px;
+  /*background-color: aqua;*/
+  display: flex;
+  justify-content: space-between;
+  margin-top: 100px;
+  align-items: center;
+  
+
+}
+
+.info-text{
+  margin-top: 60px;
+  width: 764px;
+  height: 655px;
+  font-size: 28px;
+  color: white;
+  /*background-color: blue;*/
+  font-family: 'Open Sans', sans-serif;
+  
+}
+
+.info-text h1{
+  width: 150px;
+  margin-bottom: 50px;
+}
+
+.info-text-p {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  
+}
+.info-text nav{
+  height: 68px;
+  width: 200px;
+  margin-top: 100px;
+  border-radius: 10px;
+  background-color: #FF0303;
+  display: flex;
+  justify-content: center;
+}
+
+
+.home-img{
+  margin-right: 180px ;
+  width: 750px;
+  height: 417px;
+  background-image: url(../../assets/img/infra.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
+
+.container-app{
+  height: 700px;
+  width: 70%;
+  background-color:cornflowerblue;
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 0;
+  
+}
+
+.box-app-1{
+  width: 1225px;
+  height: 528px;
+  display: flex;
+
+}
+
+.app-1-p{
+  width: 400px;
+  height: 180px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.app-1{
+  height: auto;
+  width: 775px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  
+}
+
+
+.img{
+  height:341px;
+  width: 775px;
+  background-image: url(../../assets/img/zabbix.png);
+}
+
+
+.container-app-2{
+  background-color: white;
+  height: 600px;
+  width: 100vmax;
+}
+

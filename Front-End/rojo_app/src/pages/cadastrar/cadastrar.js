@@ -1,66 +1,53 @@
-import { Component } from "react";
+import { Component } from 'react';
 import axios from 'axios';
-import { parseJwt } from "../../services/auth";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-import Logo from '../../assets/img/logoRojo.png'
-
-import '../../assets/css/login.css'
-
-export default class Login extends Component{
+class Cadastrar extends Component {
     constructor(props){
         super(props);
         this.state = {
-            email : '',
+            nome  : '',
+            email :  '',
             senha : '',
-            token : '',
+            contato  : '',
+            cargo : '',
+            razaoSocial : '',
+            confirmarSenha : '',
             erroMensagem : '',
             isLoading : false,
-            situacao : false,
-        }
+        };
     }
 
-    efetuarLogin = (event) => {
+    efetuarCadastro = (formulario) => {
 
-        event.preventDefault();  
+        formulario.preventDefault();
 
-        this.setState({ erroMensagem : null, isLoading : true});
-
-        axios
-            .post('http://localhost:5000/api/Login', {
+        this.setState({ isLoading : true });
+        
+        if(this.state.confirmarSenha === this.state.senha)
+        {
+            axios
+            .post('http://localhost:5000/api/Usuario', {
+                nome : this.state.nome,
+                razaoSocial : this.state.razaoSocial,
+                cargo : this.state.cargo,
+                contato : this.state.contato,
                 email : this.state.email,
-                senha : this.state.senha
+                senha : this.state.senha,
+                
+            })
+            .catch(() => {
+                this.setState({
+                    erroMensagem : 'campo vazio',
+                });
             })
 
-            .then(response => {
-
-                if(response.status === 200){
-
-                    localStorage.setItem('usuario-login', response.data.token)
-
-                    //console.log('Meu token é: ' + response.data.token)
-
-                    this.setState({ isLoading : false });
-
-                    //let base64 = localStorage.getItem('usuario-login').split('.')[1]; 
-
-                    //JSON.parse(window.atob(base64))
-
-                    if(parseJwt().Role === '1') {
-                        this.props.history.push('/Equipamento')
-                    }
-                    else{
-                        this.props.history.goBack('/Login');
-                    }
-                }
-        })
-
-        .catch(() => {
+        }  else{
             this.setState({
-                erroMensagem : 'E-mail ou senha incorretos',
-                isLoading : false,
-            });
-        });
+            [this.state.erroMensagem] : 'senha invalida'
+        })}
+
+        
     }
 
     atualizaStateCampo = (campo) => {
@@ -80,17 +67,49 @@ export default class Login extends Component{
                 </header>
                 <section className="bg-login">
 
-                    <div className="container-login">
+                    <div className="container-cadastro">
                         <div>
                             <nav>
                                 <Link to="/Login">Login</Link>
-                                <Link to="/Cadastrar"> Cadastrar</Link>
+                                <Link to="/Cadatrar"> Cadastrar</Link>
                             </nav>
                         </div>
 
                         <div>
 
-                            <form onSubmit={this.efe}>
+                            <form onSubmit={this.efetuarCadastro}>
+                                <input
+                                    className="input-login"
+                                    type="text"
+                                    name="nome"
+                                    value={this.state.nome}
+                                    onChange={this.atualizaStateCampo}
+                                    placeholder="Nome"
+                                /> 
+                                <input
+                                        className="input-login"
+                                        type="text"
+                                        name="razaoSocial"
+                                        value={this.state.razaoSocial}
+                                        onChange={this.atualizaStateCampo}
+                                        placeholder="Empresa"
+                                />
+                                <input
+                                    className="input-login"
+                                    type="text"
+                                    name="cargo"
+                                    value={this.state.cargo}
+                                    onChange={this.atualizaStateCampo}
+                                    placeholder="Cargo Profissional"
+                                />
+                                <input
+                                    className="input-login"
+                                    type="text"
+                                    name="contato"
+                                    value={this.state.contato}
+                                    onChange={this.atualizaStateCampo}
+                                    placeholder="Telefone"
+                                />
                                 <input
                                     className="input-login"
                                     type="email"
@@ -98,12 +117,20 @@ export default class Login extends Component{
                                     value={this.state.email}
                                     onChange={this.atualizaStateCampo}
                                     placeholder="Email"
-                                /> 
+                                />
                                 <input
                                     className="input-login"
                                     type="password"
                                     name="senha"
                                     value={this.state.senha}
+                                    onChange={this.atualizaStateCampo}
+                                    placeholder="Password"
+                                />
+                                <input
+                                    className="input-login"
+                                    type="password"
+                                    name="confirmarSenha"
+                                    value={this.state.confirmarSenha}
                                     onChange={this.atualizaStateCampo}
                                     placeholder="Password"
                                 />
@@ -142,7 +169,8 @@ export default class Login extends Component{
                                             Login
                                             </button>
                                         )
-                                    }
+                                    }              
+                                    
                                 </div>
 
 
@@ -156,5 +184,4 @@ export default class Login extends Component{
 
     }
 }
-
-
+export default Cadastrar;

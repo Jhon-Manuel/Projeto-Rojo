@@ -5,7 +5,7 @@ export default function ListaEquipamento (){
     const [ listaEquipamento, setListaEquipamento ] = useState([])
 
     function buscarMeusEquipamentos() {
-        axios('http://localhost:5000/api/equipamento/ ', {
+        axios.post('http://localhost:5000/api/equipamento/ ', {
             headers : {
                 'Authorization' : 'Bearer' + localStorage.getItem('usuario-login')
                 }
@@ -32,14 +32,20 @@ export default function ListaEquipamento (){
                 <main>
                     <section>
                         
-                        {listaEquipamento.map(item =>
+                        {
+                            this.state.listaEquipamento.map(item =>{
+                                return(
+                                    <div className ="card-Equipamento" key={item.id}>
+                                        <p>{item.tipoEquipamento}</p>
+                                        <p>{item.Modelo}</p>
+                                        <p>{item.NumeroSerie}</p>
+                                        
+                                    
+                                    </div>
 
-                        <div className ="card" key={item.id}>
-                            <p>{item.tipoEquipamento}</p>
-                            <p>{item.Modelo}</p>
-                            <p>{item.NumeroSerie}</p>
-                            <img src={{}}></img>
-                        </div>
+                                )
+                            }
+
                         )} 
                     </section>
                 </main>

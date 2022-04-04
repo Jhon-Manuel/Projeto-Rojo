@@ -35,7 +35,7 @@ namespace Projeto_Rojo
                 options.AddPolicy("CorsPolicy",
                                 builder =>
                                 {
-                                    builder.AllowAnyOrigin()
+                                    builder.WithOrigins("http://localhost:3000")
                                     .AllowAnyHeader()
                                     .AllowAnyMethod();
                                 });
@@ -93,11 +93,11 @@ namespace Projeto_Rojo
 
             app.UseRouting();
 
+            app.UseCors("CorsPolicy");
+
             app.UseAuthentication();
 
             app.UseAuthorization();
-
-            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

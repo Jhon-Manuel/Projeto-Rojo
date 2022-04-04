@@ -1,21 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\52518284893.INFOSCS\\Desktop\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj": {}
+    "C:\\Users\\jhonc\\OneDrive\\Área de Trabalho\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\52518284893.INFOSCS\\Desktop\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj": {
+    "C:\\Users\\jhonc\\OneDrive\\Área de Trabalho\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\52518284893.INFOSCS\\Desktop\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj",
+        "projectUniqueName": "C:\\Users\\jhonc\\OneDrive\\Área de Trabalho\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj",
         "projectName": "Projeto_Rojo",
-        "projectPath": "C:\\Users\\52518284893.INFOSCS\\Desktop\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj",
-        "packagesPath": "C:\\Users\\52518284893.INFOSCS\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\52518284893.INFOSCS\\Desktop\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\obj\\",
+        "projectPath": "C:\\Users\\jhonc\\OneDrive\\Área de Trabalho\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\Projeto_Rojo.csproj",
+        "packagesPath": "C:\\Users\\jhonc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\jhonc\\OneDrive\\Área de Trabalho\\Projeto-Rojo\\Back-End\\Projeto_Rojo\\Projeto_Rojo\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+        ],
         "configFilePaths": [
-          "C:\\Users\\52518284893.INFOSCS\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\jhonc\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
@@ -93,7 +97,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.405\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.406\\RuntimeIdentifierGraph.json"
         }
       }
     }

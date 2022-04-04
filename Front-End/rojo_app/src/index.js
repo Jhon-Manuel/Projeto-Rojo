@@ -1,42 +1,54 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import {createRoot} from 'react-dom/client';
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 
 import './index.css';
 
 import Home from './pages/home/App';
-import {Equipamento} from './pages/equipamento/equipamento';
-import Alerta from './pages/alerta/Alerta';
+import Equipamento from './pages/equipamento/equipamento';
+import Alerta from './pages/alerta/alerta';
 import ListaEquipamento from './pages/listaEquipamento/listaEquipamento';
 import Historico from './pages/historico/historico';
 import Erro  from './pages/erro/erro';
-import Login from './pages/login/login';
+import Login from './pages/login/login'
+import Cadastrar from './pages/cadastrar/cadastrar';
+import Topologia from './pages/topologia/topologia';
 
 
 import reportWebVitals from './reportWebVitals';
 
-const routing  = (
-  <Router>
+
+const root = document.getElementById('root');
+const routing = createRoot(root);
+
+routing.render(
+    <Router>
     <div>
-      <Switch>
-        <Route exact path="/" component={Home}/>
-        <Route path="/Equipamento" component={Equipamento}/>
-        <Route path="/Alerta" component={Alerta}/>
-        <Route path="/ListaEquipamento" component={ListaEquipamento}/>
-        <Route path="/Historico" component={Historico}/>
-        <Route path="/ListaEquipamento" component={Alerta}/>
-        <Route path="/Login" component={Login}/>
-        <Route path="/Erro" component={Erro} />
-        {/*<Route
-        path="*"
+      <Routes>
+        <Route exact path="/" element={<Home/>}/>
+        <Route path="/Equipamento" element={<Equipamento/>}/>
+        <Route path="/Alerta" element={<Alerta/>}/>
+        <Route path="/ListaEquipamento" element={<ListaEquipamento/>}/>
+        <Route path="/Topologia" element={<Topologia/>}/>
+        <Route path="/Historico" element={<Historico/>}/>
+        <Route path="/ListaEquipamento" element={<Alerta/>}/>
+        <Route path="/Login" element={<Login />}/>
+        <Route path="/Cadastrar" element={<Cadastrar/>}/>
+        <Route path="/Erro" element={<Erro/>} />
+        <Route path='/Zabbix' element={() => {
+            window.location.href ='https://www.zabbix.com/';
+            return null;
+        }}/>
+        <Route
+        path="/*"
         element={<Navigate to="/Erro" replace />}
-        />*/}
-      </Switch>
+        />
+      </Routes>
     </div>
   </Router>
 );
 
-ReactDOM.render(routing , document.getElementById('root'));
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

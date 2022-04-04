@@ -3,3 +3,4 @@ export const parseJwt = () => {
 
     return JSON.parse( window.atob(base64) );
 }
+
