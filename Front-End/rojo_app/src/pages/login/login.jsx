@@ -1,38 +1,36 @@
-import { Component } from "react";
 import axios from 'axios';
-import { parseJwt, usuarioAutenticado } from "../../services/auth";
-import { Link } from "react-router-dom";
+import { parseJwt } from "../../services/auth";
+import { Link, useNavigate } from "react-router-dom";
 
-import Logo from '../../assets/img/logoRojo.png'
+import Logo from '../../assets/img/logoRojo.png';
 
-import '../../assets/css/login.css'
+import '../../assets/css/login.css';
+import { useState } from 'react';
 
-export default class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            email : '',
-            senha : '',
-            token : '',
-            erroMensagem : '',
-            isLoading : false,
-            situacao : false,
-        }
-    }
 
-    efetuarLogin = (event) => {
+export default function Login (){
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [isLoading,setIsLoading] = useState(false);
+    const [erroMensagem,setErroMensagem] = useState('');
+
+    var navigate = useNavigate(); 
+
+    function FazerLogin (event) {
 
         event.preventDefault();  
 
-        this.setState({ erroMensagem : null, isLoading : true});
+        setErroMensagem(null);
+
+        isLoading(true);
 
         axios
             .post('http://localhost:5000/api/Login', {
-                email : this.state.email,
-                senha : this.state.senha
+                email : email,
+                senha : senha,
             })
 
-            .then(response => {
+            .then((response) => {
 
                 if(response.status === 200){
 
@@ -40,64 +38,67 @@ export default class Login extends Component{
 
                     //console.log('Meu token é: ' + response.data.token)
 
-                    this.setState({ isLoading : false });
+                    setIsLoading(false);
 
                     //let base64 = localStorage.getItem('usuario-login').split('.')[1]; 
 
                     //JSON.parse(window.atob(base64))
 
                     if(parseJwt().Role === '1') {
-                        this.props.history.push('/Equipamento')
+                        navigate('/Equipamento')
+                    }
+                    else if(parseJwt().Role === '2'){
+                        navigate('/Equipamento')
                     }
                     else{
-                        this.props.history.goBack('/Login');
+                        navigate('/Login');
                     }
+                    
                 }
-        })
+            }
+        )
 
-        .catch(() => {
-            this.setState({
-                erroMensagem : 'E-mail ou senha incorretos',
-                isLoading : false,
-            });
-        });
+        .catch(erro => {
+                erro = ('Email ou senha incorretos')
+                setErroMensagem (erro)
+                setIsLoading(false)
+          })
     }
 
-    atualizaStateCampo = (campo) => {
-        this.setState({ [campo.target.name] : campo.target.value })
+    function atualizaStateCampo (campo){
+        campo.target.name = campo.target.value 
     }
         
     
-    render(){
-        return(
+    return(
+        
             <div className="container-login">
-                {/* <header>
-                    <div>
+                 <header>
+                    <div className="logo-header-login">
                         <nav>
-                            <Link to="/home" />
+                            <Link to="/"><img src={Logo}/></Link>
                         </nav>
                     </div>    
-                </header>
-                 */}
+                    </header>
                 <div className="bg-animation-login"/>
                 <div className="box-login">
                         <div className="box-login-nav">
                             <nav>
-                                <Link to="/Login">Login</Link>
-                                <Link to="/Cadastrar"> Cadastrar</Link>
+                                <Link to="/Login">LOGIN</Link>
+                                <Link to="/CadastrarUsuario"> CADASTRAR</Link>
                             </nav>
                         </div>
 
                         <div className="box-form-login">
 
-                            <form  className="form-login" onSubmit={this.efetuarLogin}>
+                            <form  className="form-login" onSubmit={FazerLogin}>
                                 <div className="box-input-login">
                                     <p>Email</p>
 
                                     <input
                                         className="input-login"
                                         type="email"
-                                        name="email"
+                                        name="setEmail"
                                         value={this.state.email}
                                         onChange={this.atualizaStateCampo}
                                         placeholder="example@email.com"
@@ -108,7 +109,7 @@ export default class Login extends Component{
                                     <input
                                         className="input-login"
                                         type="password"
-                                        name="senha"
+                                        name="setSenha"
                                         value={this.state.senha}
                                         onChange={this.atualizaStateCampo}
                                         placeholder="* * * * *"
@@ -159,7 +160,7 @@ export default class Login extends Component{
             </div>
         )
 
-    }
-}
+                                }  
+
 
 

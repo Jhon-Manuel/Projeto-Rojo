@@ -12,6 +12,13 @@
     background: radial-gradient(86.52% 100.31% at 88.16% 13.48%, #DA192C 0%, #851F29 17.18%, #60161D 46.87%, #30090D 73.95%, #210508 94.8%) /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
 }
 
+.logo-header-login{
+  position: absolute;
+  z-index: 0;
+  top:30px;
+  left:80px
+}
+
 .bg-animation-login{
   position: absolute;
   z-index: 0;
@@ -41,6 +48,23 @@
   align-items: center;
 }
 
+.box-login-2{
+  z-index: 1;
+  position: absolute;
+  top: 200px;
+  right: 452px;
+  width: 632px;
+  height: 367px;
+  border-radius: 10px;
+  background: linear-gradient(319.74deg, rgba(0, 0, 0, 0.3952) -0.87%, rgba(0, 0, 0, 0.76) 116.41%);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+
 .box-login a{
   text-decoration: none;
   font-size: 16px;
@@ -49,28 +73,46 @@
 }
 
 .box-login-nav{
-  width: 200PX;
+  width: 220PX;
   height: auto;
   background-color:orange;
+}
+
+.box-login-nav a{
+  color: white;
+  margin-right: 10px;
+
 }
 
 .box-form-login{
   width: 220px;
   height: 220px;
-  /* background-color: blueviolet; */
+  background-color: blueviolet;
 }
 
-.form-login{
+.box-form-login-2{
+  width: 220px;
+  height: 220px;
+  background-color: blueviolet;
+}
+
+.cont-login{
+  width: 500px;
+  height: 220px;
+  background-color: thistle;
+}
+
+.form-login, .form-login-2{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: top;
+    align-items: top;
   width: 100%;
   height: 100%;
-  /* background-color: aquamarine; */
+  background-color: aquamarine;
 }
 
-.form-login p {
+.form-login p, .form-login-2 p{
   color: white;
   font-size: 12px;
 }
@@ -79,6 +121,10 @@
   width: 220px;
   height: 42px;
   margin-bottom: 10px;
+}
+
+.box-input-login input{
+  color:white;
 }
 
 .input-login{
@@ -96,10 +142,11 @@
   border-radius:5px;
   background-color: #A71111;
   border: none;
-  
+  margin-left: 48px;
   color:white;
 }
 
 .login-recuperar{
   margin-bottom: 20px;
 }
+

@@ -1,153 +1,129 @@
-
-import { Component } from 'react';
+import { Component } from "react";
 import axios from 'axios';
-import { Link } from 'react-router-dom'
+import { parseJwt, usuarioAutenticado } from "../../services/auth";
+import { Link } from "react-router-dom";
 
-class Cadastrar extends Component {
+import Logo from '../../assets/img/logoRojo.png';
+
+import '../../assets/css/login.css';
+
+export default class Login extends Component{
     constructor(props){
         super(props);
         this.state = {
-            nome  : '',
-            email :  '',
+            email : '',
             senha : '',
-            contato  : '',
-            cargo : '',
-            razaoSocial : '',
-            confirmarSenha : '',
+            token : '',
             erroMensagem : '',
             isLoading : false,
-        };
+            situacao : false,
+        }
     }
 
-    efetuarCadastro = (formulario) => {
+    efetuarCadastro = (event) => {
+        event.preventDefault();
 
-        formulario.preventDefault();
-
-        this.setState({ isLoading : true });
-        
-        if(this.state.confirmarSenha === this.state.senha)
-        {
-            axios
-            .post('http://localhost:5000/api/Usuario', {
-                nome : this.state.nome,
-                razaoSocial : this.state.razaoSocial,
-                cargo : this.state.cargo,
-                contato : this.state.contato,
-                email : this.state.email,
-                senha : this.state.senha,
-                
-            })
-            .catch(() => {
-                this.setState({
-                    erroMensagem : 'campo vazio',
-                });
-            })
-
-        }  else{
-            this.setState({
-            [this.state.erroMensagem] : 'senha invalida'
-        })}
-
-        
+        axios
+        .post('http://localhost:5000/api/Usuario', {
+            
+        })
     }
+
 
     atualizaStateCampo = (campo) => {
         this.setState({ [campo.target.name] : campo.target.value })
-    }
+    };
         
     
     render(){
         return(
-            <div>
-                <header>
-                    <div>
+            <div className="container-login">
+                 <header>
+                    <div className="logo-header-login">
                         <nav>
-                            <Link to="/home" />
+                            <Link to="/"><img src={Logo}/></Link>
                         </nav>
                     </div>    
                 </header>
-                <section className="bg-login">
-
-                    <div className="container-cadastro">
-                        <div>
-                            <nav>
-                                <Link to="/Login">Login</Link>
-                                <Link to="/Cadatrar"> Cadastrar</Link>
+                <div className="bg-animation-login"/>
+                <div className="box-login-2">
+                        <div className="box-login-nav">
+                            <nav>       
+                                <Link to="/Login">LOGIN</Link>
+                                <Link to="/CadastrarUsuario"> CADASTRAR</Link>
                             </nav>
                         </div>
 
-                        <div>
+                        <div className="box-form-login-2">
 
-                            <form onSubmit={this.efetuarCadastro}>
-                                <input
-                                    className="input-login"
-                                    type="text"
-                                    name="nome"
-                                    value={this.state.nome}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Nome"
-                                /> 
-                                <input
-                                        className="input-login"
-                                        type="text"
-                                        name="razaoSocial"
-                                        value={this.state.razaoSocial}
-                                        onChange={this.atualizaStateCampo}
-                                        placeholder="Empresa"
-                                />
-                                <input
-                                    className="input-login"
-                                    type="text"
-                                    name="cargo"
-                                    value={this.state.cargo}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Cargo Profissional"
-                                />
-                                <input
-                                    className="input-login"
-                                    type="text"
-                                    name="contato"
-                                    value={this.state.contato}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Telefone"
-                                />
-                                <input
-                                    className="input-login"
-                                    type="email"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Email"
-                                />
-                                <input
-                                    className="input-login"
-                                    type="password"
-                                    name="senha"
-                                    value={this.state.senha}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Password"
-                                />
-                                <input
-                                    className="input-login"
-                                    type="password"
-                                    name="confirmarSenha"
-                                    value={this.state.confirmarSenha}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Password"
-                                />
-                                <div>
+                            <form  className="form-login-2" onSubmit={this.efetuarLogin}>
+                                <div className="cont-login">
 
-                                    <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
+                                    <div className="box-cadastro-1">
+                                        <div className="box-input-login">
+                                            <p>Email</p>
 
+                                            <input
+                                                className="input-login"
+                                                type="email"
+                                                name="email"
+                                                value={this.state.email}
+                                                onChange={this.atualizaStateCampo}
+                                                placeholder="example@email.com"
+                                            /> 
+                                        </div>
+                                        <div className="box-input-login">
+                                            <p>Senha</p>
+                                            <input
+                                                className="input-login"
+                                                type="password"
+                                                name="senha"
+                                                value={this.state.senha}
+                                                onChange={this.atualizaStateCampo}
+                                                placeholder="* * * * *"
+                                            />
+                                        </div>
+                                    </div>
 
-                                    <a style={{ color : 'blue', fontSize : 14}} href="/Recuperar-senha">Esqueceu a senha</a>
+                                    <div className="box-cadastro-2">
+
+                                        <div className="box-input-login">
+                                            <p>Email</p>
+
+                                            <input
+                                                className="input-login"
+                                                type="email"
+                                                name="email"
+                                                value={this.state.email}
+                                                onChange={this.atualizaStateCampo}
+                                                placeholder="example@email.com"
+                                            /> 
+                                        </div>
+                                    </div>
+                                    <div className="box-input-login">
+                                        <p>Senha</p>
+                                        <input
+                                            className="input-login"
+                                            type="password"
+                                            name="senha"
+                                            value={this.state.senha}
+                                            onChange={this.atualizaStateCampo}
+                                            placeholder="* * * * *"
+                                        />
+                                    </div>
+                                </div>
+
+                                <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
+
+                                <p className="login-recuperar" style={{ color : 'white', fontSize : 12,}} href="/Recuperar-senha">Esqueceu a senha</p>
+                          
 
                                     {
                                         this.state.isLoading === true && (
                                             <button
                                             type="submit"
                                             disabled
-                                            className="btn btn__login"
+                                            className="btn-login"
                                             id="btn__login"
                                             >
                                             Loading...
@@ -158,7 +134,7 @@ class Cadastrar extends Component {
                                     {
                                         this.state.isLoading === false && (
                                             <button
-                                            className="btn btn__login"
+                                            className="btn-login"
                                             id="btn__login"
                                             type="submit"
                                             disabled={
@@ -167,22 +143,19 @@ class Cadastrar extends Component {
                                                 : ''
                                             }
                                             >
-                                            Login
+                                            LOGIN
                                             </button>
                                         )
-                                    }              
-                                    
-                                </div>
+                                    }
+      
 
 
                             </form>
                         </div>
                        
                     </div>
-                </section>
             </div>
         )
-
     }
 }
-export default Cadastrar;
+

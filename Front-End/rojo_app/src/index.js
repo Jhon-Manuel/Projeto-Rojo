@@ -30,13 +30,13 @@ routing.render(
         <Route exact path="/" element={<Home/>}/>
         <Route element={<ProtectedRoutes/>}>
           <Route path="/Equipamento" element={<Equipamento/>}/>
+        </Route>
           <Route path="/Alerta" element={<Alerta/>}/>
           <Route path="/ListaEquipamento" element={<ListaEquipamento/>}/>
           <Route path="/Topologia" element={<Topologia/>}/>
           <Route path="/Historico" element={<Historico/>}/>
           <Route path="/ListaEquipamento" element={<Alerta/>}/>
 
-        </Route>
         <Route path="/Login" element={<Login />}/>
         <Route path="/CadastrarUsuario" element={<CadastrarUsuario/>}/>
         <Route path="/CadastrarEquipamento" element={<CadastrarEquipamento/>}/>

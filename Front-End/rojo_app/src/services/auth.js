@@ -9,7 +9,9 @@ export const parseJwt = () => {
 }
 
 export const ProtectedRoutes = () => {
-    const isAuth = UsuarioAutenticado();
-    return isAuth ? <Navigate to="/"/> : <Navigate to="/"/>;
+    function PrivateRoute({ UsuarioAutenticado}){
+
+        return PrivateRoute ? <Outlet/> : <Navigate to="/"/>;
+    }
       
 }
