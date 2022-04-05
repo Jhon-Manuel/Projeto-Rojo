@@ -24,7 +24,7 @@ function App() {
       <main>
         <div className="master">
 
-          <div classNmae="container-home">
+          <div className="container-home">
 
             <div className='home-banner'>
                 <div className='home-info'>

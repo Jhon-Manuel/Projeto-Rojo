@@ -1,6 +1,6 @@
 import { Component } from "react";
 import axios from 'axios';
-import { parseJwt } from "../../services/auth";
+import { parseJwt, usuarioAutenticado } from "../../services/auth";
 import { Link } from "react-router-dom";
 
 import Logo from '../../assets/img/logoRojo.png'
@@ -70,56 +70,62 @@ export default class Login extends Component{
     
     render(){
         return(
-            <div>
-                <header>
+            <div className="container-login">
+                {/* <header>
                     <div>
                         <nav>
                             <Link to="/home" />
                         </nav>
                     </div>    
                 </header>
-                <section className="bg-login">
-
-                    <div className="container-login">
-                        <div>
+                 */}
+                <div className="bg-animation-login"/>
+                <div className="box-login">
+                        <div className="box-login-nav">
                             <nav>
                                 <Link to="/Login">Login</Link>
                                 <Link to="/Cadastrar"> Cadastrar</Link>
                             </nav>
                         </div>
 
-                        <div>
+                        <div className="box-form-login">
 
-                            <form onSubmit={this.efe}>
-                                <input
-                                    className="input-login"
-                                    type="email"
-                                    name="email"
-                                    value={this.state.email}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Email"
-                                /> 
-                                <input
-                                    className="input-login"
-                                    type="password"
-                                    name="senha"
-                                    value={this.state.senha}
-                                    onChange={this.atualizaStateCampo}
-                                    placeholder="Password"
-                                />
-                                <div>
+                            <form  className="form-login" onSubmit={this.efetuarLogin}>
+                                <div className="box-input-login">
+                                    <p>Email</p>
 
-                                    <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
+                                    <input
+                                        className="input-login"
+                                        type="email"
+                                        name="email"
+                                        value={this.state.email}
+                                        onChange={this.atualizaStateCampo}
+                                        placeholder="example@email.com"
+                                    /> 
+                                </div>
+                                <div className="box-input-login">
+                                    <p>Senha</p>
+                                    <input
+                                        className="input-login"
+                                        type="password"
+                                        name="senha"
+                                        value={this.state.senha}
+                                        onChange={this.atualizaStateCampo}
+                                        placeholder="* * * * *"
+                                    />
+                                </div>
 
+                                <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
 
-                                    <a style={{ color : 'blue', fontSize : 14}} href="/Recuperar-senha">Esqueceu a senha</a>
+                                <p className="login-recuperar" style={{ color : 'white', fontSize : 12,}} href="/Recuperar-senha">Esqueceu a senha</p>
+                          
 
                                     {
                                         this.state.isLoading === true && (
                                             <button
                                             type="submit"
                                             disabled
-                                            className="btn btn__login"
+                                            className="btn-login"
                                             id="btn__login"
                                             >
                                             Loading...
@@ -130,7 +136,7 @@ export default class Login extends Component{
                                     {
                                         this.state.isLoading === false && (
                                             <button
-                                            className="btn btn__login"
+                                            className="btn-login"
                                             id="btn__login"
                                             type="submit"
                                             disabled={
@@ -139,18 +145,17 @@ export default class Login extends Component{
                                                 : ''
                                             }
                                             >
-                                            Login
+                                            LOGIN
                                             </button>
                                         )
                                     }
-                                </div>
+      
 
 
                             </form>
                         </div>
                        
                     </div>
-                </section>
             </div>
         )
 

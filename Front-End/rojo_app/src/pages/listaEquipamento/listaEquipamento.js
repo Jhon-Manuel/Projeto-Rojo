@@ -22,6 +22,7 @@ export default function ListaEquipamento (){
 
     useEffect( buscarMeusEquipamentos, [] );
 
+
     
 
     return(
