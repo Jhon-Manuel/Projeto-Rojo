@@ -15,9 +15,9 @@ namespace Projeto_Rojo.Interfaces
         string ConsultarPerfilDir(int id_e);
 
 
-        IEnumerable<Equipamento> Listar();
+        IEnumerable<Equipamento> Listar(int idUsuario);
 
-        Equipamento BuscarPorId(int id);
+        Equipamento BuscarPorId(int idEquipamento);
 
         Equipamento Cadastrar(Equipamento e);
 

@@ -17,7 +17,7 @@ import Topologia from './pages/topologia/topologia';
 
 
 import reportWebVitals from './reportWebVitals';
-import {ProtectedRoutes } from './services/auth';
+import PrivateRoute  from './services/protected';
 
 
 const root = document.getElementById('root');
@@ -28,7 +28,7 @@ routing.render(
     <div>
       <Routes>
         <Route exact path="/" element={<Home/>}/>
-        <Route element={<ProtectedRoutes/>}>
+        <Route element={<PrivateRoute/>}>
           <Route path="/Equipamento" element={<Equipamento/>}/>
         </Route>
           <Route path="/Alerta" element={<Alerta/>}/>

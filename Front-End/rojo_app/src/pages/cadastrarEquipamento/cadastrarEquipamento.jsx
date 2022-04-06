@@ -1,8 +1,5 @@
-import { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
-
+import { Link, useNavigate } from "react-router-dom";
 
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
@@ -23,80 +20,62 @@ import '../../assets/css/barra-esquerda.css';
 import '../../assets/css/equipamento.css';
 
 
+export default function CadastroEquipamento() {
 
-export default class Equipamento extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            nome : 'Taina Silva',
-            cargo : 'Supervisora de Infraestrutura',
-           listaEquipamento : [],
-           tipoEquipamento: '',
-           Modelo : 'Switch',
-           NumeroSerie : 0,
-           Gateway: 0,
-           IP : 0,
-           DNS : 0,
-           Porta : 0,
-           img64 : '',
-           arquivo: null,
-           descricao:'',
-           titulosecao : 'Equipamento',
-           atualizar : false,
+    var navigate = useNavigate();
+    
+    const [Loading, setLoading] = useState(false);
+    const [boolPut, setBoolPut] = useState(false);
 
-           dataModificacao : new Date(),
-           descricaoModificacao : '',
+    //States Usuario
+    const [nome, setNome] = useState('');
+    const [cargo, setCargo] = useState('');
 
-           isLoading : false,
-        }
+    //States Equipamento
+    const [idEquipamento, setIdEquipamento] = useState(0);
+    const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
+    const [modelo, setModelo] = useState(0);
+    const [numeroSerie, setNumeroSerie] = useState(0);
+    const [gateWay, setGateWay] = useState(0);
+    const [ip, setIp] = useState(0);
+    const [dns, setDns] = useState(0);
+    const [porta, setPorta] = useState(0);
+    const [img64, setImg64] = useState(0);
+    const [arquivo, setArquivo] = useState('');
+    const [descricao, setDescricao] = useState('');
+    const [condicao, setCondicao] =useState('');
+
+    //Listas
+    const [listaTipoEquipamento, setListaEquipamento] = useState([]);
+
+
+    function listaTipoequipamento(){
+        axios.get('http://localhost:5000/api/Usuario/',{})
+
+        .then(resposta => resposta.status === 201)
     }
 
-    buscarPorId = (event) => {
+    function buscarUsuarioPorId(event)
+    {
         event.preventDefault();
         
-        axios.get('http://localhost:5000/api/equipamento/', {
-        })
-    }
-
-    alterarEstadoEsquipamento = (alteracao) => {
-        this.setState({
-
-        })
-    }
-
-    upload = (event) => {
-        event.preventDefault();
-
-        const formData = new FormData();
-
-        formData.append(
-            'arquivo', 
-            this.state.arquivo
-        )
-
-        axios.post('http://localhost:5000/api/equipamento/', formData, {
-            headers : {
-                Authorization : 'Bearer' + localStorage.getItem
-                ('usuario-login')
+        axios.get('http://localhost:5000/api/Usuario/', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
             }
-            
-        }) 
-        .catch( (erro) => console.log(erro))
-        .then(console.log("Arquivo Enviado"))
+        })
+
+        .then((resposta) => {
+            if(resposta.status === 200){
+                navigate('/Equipamento')
+            }
+                
+            }
+        )
+        .catch(erro => console.log(erro))
+
     }
-
-    atualizaStateCampo = (campo) => {
-        this.setState({ [campo.target.name] : campo.target.value })
-    }
-
-    atualizaEquipamento = (campo) => {
-        campo.preventDefault();
-
-        axios
-        .put('')
-    }
-
-    render(){
+    
         return(   
             <div className="container-equipamento">
                 <div>
@@ -262,7 +241,7 @@ export default class Equipamento extends Component{
                                                                         className="input"
                                                                         type="text"
                                                                         name="tipoEquipamento"
-                                                                        value={this.state.tipoEquipamento}
+                                                                        value={idTipoEquipamento}
                                                                         placeholder="Tipo Equipamento"
                                                                         onChange={this.atualizaStateCampo}
                                                                         disabled = {this.state.atualizar === true ? 'none' : ''}
@@ -440,6 +419,6 @@ export default class Equipamento extends Component{
                 </div>
             </div>
         );
-    }
+    
 
 }

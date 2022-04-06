@@ -24,30 +24,33 @@ import '../../assets/css/equipamento.css';
 
 
 
-export default class Equipamento extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            nome : 'Taina Silva',
-            cargo : 'Supervisora de Infraestrutura',
-           listaEquipamento : [],
-           tipoEquipamento: '',
-           Modelo : 'Switch',
-           NumeroSerie : 0,
-           Gateway: 0,
-           IP : 0,
-           DNS : 0,
-           Porta : 0,
-           img64 : '',
-           arquivo: null,
-           descricao:'',
-           titulosecao : 'Equipamento',
-           atualizar : false,
+export default function Equipamento(){
+    
+    var navigate = useNavigate();
+    
+    const [Loading, setLoading] = useState(false);
+    const [boolPut, setBoolPut] = useState(false);
 
-           dataModificacao : new Date(),
-           descricaoModificacao : '',
-        }
-    }
+    //States Usuario
+    const [nome, setNome] = useState('');
+    const [cargo, setCargo] = useState('');
+
+    //States Equipamento
+    const [idEquipamento, setIdEquipamento] = useState(0);
+    const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
+    const [modelo, setModelo] = useState(0);
+    const [numeroSerie, setNumeroSerie] = useState(0);
+    const [gateWay, setGateWay] = useState(0);
+    const [ip, setIp] = useState(0);
+    const [dns, setDns] = useState(0);
+    const [porta, setPorta] = useState(0);
+    const [img64, setImg64] = useState(0);
+    const [arquivo, setArquivo] = useState('');
+    const [descricao, setDescricao] = useState('');
+    const [condicao, setCondicao] =useState('');
+    
+    //Listas 
+    const [listaEquipamento, setListaEquipamento] = useState([]);  
 
     buscarPorId = (event) => {
         event.preventDefault();
@@ -56,11 +59,25 @@ export default class Equipamento extends Component{
         })
     }
 
-    alterarEstadoEsquipamento = (alteracao) => {
-        this.setState({
+    function atualizarEquipamento(event)
+    {
+        event.preventDefault();
 
-        })
+        let equipamento = {
+            Modelo : modelo,
+            NumeroSerie : numeroSerie,
+            GateWay : gateWay,
+            Mask : ip,
+            Dns : dns,
+            Porta : porta,
+            Condicao : condicao,
+            Descricao : descricao,
+        }
+
+        axios.put('http://localhost:5000/api/Equipamento' + idEquipamento, {})
+
     }
+
 
     upload = (event) => {
         event.preventDefault();

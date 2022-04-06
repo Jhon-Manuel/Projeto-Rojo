@@ -1,4 +1,3 @@
-import { Component } from "react";
 import axios from 'axios';
 import { parseJwt, usuarioAutenticado } from "../../services/auth";
 import { Link } from "react-router-dom";
@@ -6,36 +5,53 @@ import { Link } from "react-router-dom";
 import Logo from '../../assets/img/logoRojo.png';
 
 import '../../assets/css/login.css';
+import { useState } from 'react';
 
-export default class Login extends Component{
-    constructor(props){
-        super(props);
-        this.state = {
-            email : '',
-            senha : '',
-            token : '',
-            erroMensagem : '',
-            isLoading : false,
-            situacao : false,
-        }
-    }
+export default function CadastroUsuario(){
+    
+    const [nome, setNome] = useState('');
+    const [email, setEmail] = useState('');
+    const [senha, setSenha] = useState('');
+    const [contato, setContato] = useState('');
+    const [cargo, setCargo] = useState('');
+    const [razaoSocial, setRazaoSocial] = useState('');
+    const [tipoUsuario, setTipoUsuario] = useState(1);
+    const [loading, setLoading] = useState(false);
 
-    efetuarCadastro = (event) => {
+    function CadastrarUsuario(event) {
+
         event.preventDefault();
 
-        axios
-        .post('http://localhost:5000/api/Usuario', {
-            
+        setLoading(true)
+
+        let usuario = {
+            tipoUsuario : tipoUsuario,
+            nome: nome,
+            email: email,
+            senha: senha,
+            contato : contato,
+            cargo : cargo,
+            razaoSocial : razaoSocial,
+         
+        }
+
+        axios.post('https://localhost:5000/api/Usuario', usuario, {
+
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
+            }
         })
+
+            .then((resposta) => {
+                if (resposta.status === 200) {
+                    setLoading(false)
+                    console.log('usuario cadastrado !')
+                }
+
+            })
+
+            .then(erro => console.log(erro))
     }
-
-
-    atualizaStateCampo = (campo) => {
-        this.setState({ [campo.target.name] : campo.target.value })
-    };
-        
-    
-    render(){
         return(
             <div className="container-login">
                  <header>
@@ -56,74 +72,87 @@ export default class Login extends Component{
 
                         <div className="box-form-login-2">
 
-                            <form  className="form-login-2" onSubmit={this.efetuarLogin}>
+                            <form  className="form-login-2" onSubmit={CadastrarUsuario}>
                                 <div className="cont-login">
 
                                     <div className="box-cadastro-1">
-                                        <div className="box-input-login">
-                                            <p>Email</p>
+                                        <div className="box-input-login-2">
+                                            <p>Nome</p>
 
                                             <input
                                                 className="input-login"
-                                                type="email"
-                                                name="email"
-                                                value={this.state.email}
-                                                onChange={this.atualizaStateCampo}
-                                                placeholder="example@email.com"
+                                                type="text"
+                                                value={nome}
+                                                onChange={event => setNome(event.target.value)}
+                                                placeholder="nome completo"
                                             /> 
                                         </div>
-                                        <div className="box-input-login">
-                                            <p>Senha</p>
+                                        <div className="box-input-login-2">
+                                            <p>Cargo</p>
                                             <input
                                                 className="input-login"
-                                                type="password"
-                                                name="senha"
-                                                value={this.state.senha}
-                                                onChange={this.atualizaStateCampo}
-                                                placeholder="* * * * *"
+                                                type="text"
+                                                value={cargo}
+                                                onChange={event => setCargo(event.target.value)}
+                                                placeholder="posicao"
+                                            />
+                                        </div>
+                                        <div className="box-input-login-2">
+                                            <p>Empresa</p>
+                                            <input
+                                                className="input-login"
+                                                type="empresa"
+                                                value={razaoSocial}
+                                                onChange={event => setRazaoSocial(event.target.value)}
+                                                placeholder="razao social"
                                             />
                                         </div>
                                     </div>
 
                                     <div className="box-cadastro-2">
 
-                                        <div className="box-input-login">
+                                        <div className="box-input-login-2">
                                             <p>Email</p>
 
                                             <input
                                                 className="input-login"
                                                 type="email"
                                                 name="email"
-                                                value={this.state.email}
-                                                onChange={this.atualizaStateCampo}
+                                                value={email}
+                                                onChange={event => setEmail(event.target.value)}
                                                 placeholder="example@email.com"
                                             /> 
                                         </div>
-                                    </div>
-                                    <div className="box-input-login">
-                                        <p>Senha</p>
-                                        <input
-                                            className="input-login"
-                                            type="password"
-                                            name="senha"
-                                            value={this.state.senha}
-                                            onChange={this.atualizaStateCampo}
-                                            placeholder="* * * * *"
-                                        />
+                                        <div className="box-input-login-2">
+                                            <p>Senha</p>
+                                            <input
+                                                className="input-login"
+                                                type="password"
+                                                value={senha}
+                                                onChange={event => setSenha(event.target.value)}
+                                                placeholder="* * * * *"
+                                            />
+                                        </div>
+                                        <div className="box-input-login-2">
+                                            <p>Contato</p>
+                                            <input
+                                                className="input-login"
+                                                type="text"
+                                                value={contato}
+                                                onChange={event => setContato(event.target.value)}
+                                                placeholder="(11)00000-0000"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
-
-                                <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
-
-                                <p className="login-recuperar" style={{ color : 'white', fontSize : 12,}} href="/Recuperar-senha">Esqueceu a senha</p>
                           
 
                                     {
-                                        this.state.isLoading === true && (
+                                        loading === true && (
                                             <button
                                             type="submit"
                                             disabled
-                                            className="btn-login"
+                                            className="btn-login-2"
                                             id="btn__login"
                                             >
                                             Loading...
@@ -132,18 +161,18 @@ export default class Login extends Component{
                                     }
 
                                     {
-                                        this.state.isLoading === false && (
+                                        loading === false && (
                                             <button
-                                            className="btn-login"
+                                            className="btn-login-2"
                                             id="btn__login"
                                             type="submit"
                                             disabled={
-                                                this.state.email === '' || this.state.senha === ''
+                                                email === '' || senha === ''
                                                 ? 'none'
                                                 : ''
                                             }
                                             >
-                                            LOGIN
+                                            CADASTRAR
                                             </button>
                                         )
                                     }
@@ -156,6 +185,6 @@ export default class Login extends Component{
                     </div>
             </div>
         )
-    }
-}
+                                }
+
 

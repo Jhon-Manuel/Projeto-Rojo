@@ -118,9 +118,10 @@ namespace Projeto_Rojo.Repositories
 
 
 
-        public Equipamento BuscarPorId(int id)
+        public Equipamento BuscarPorId(int idEquipamento)
         {
-            return ctx.Equipamentos.FirstOrDefault(e => e.IdEquipamento == id);
+
+            return ctx.Equipamentos.FirstOrDefault(e => e.IdEquipamento == idEquipamento);
         }
 
 
@@ -149,9 +150,29 @@ namespace Projeto_Rojo.Repositories
         }
 
 
-        public IEnumerable<Equipamento> Listar()
+        public IEnumerable<Equipamento> Listar(int idUsuario)
         {
-            return ctx.Equipamentos.ToList();
+            Usuario usuario = ctx.Usuarios.Find(idUsuario);
+
+            return ctx.Equipamentos
+                .Select(e => new Equipamento
+                {
+                    IdUsuario = e.IdUsuario,
+                    IdEquipamento = e.IdEquipamento,
+                    IdTipoEquipamento = e.IdTipoEquipamento,
+                    Modelo = e.Modelo,
+                    NumeroDeSerie = e.NumeroDeSerie,
+                    Mask = e.Mask,
+                    Porta = e.Porta,
+                    Dns = e.Dns,
+                    GateWay = e.GateWay,
+                    Descricao = e.Descricao,
+                    DataEntrada = e.DataEntrada,
+                })
+                .Where(e => e.IdUsuario == usuario.IdUsuario)
+                .ToList();
+
+       
         }
     }
 }

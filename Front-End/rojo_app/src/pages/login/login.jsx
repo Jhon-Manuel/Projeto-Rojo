@@ -22,7 +22,7 @@ export default function Login (){
 
         setErroMensagem(null);
 
-        isLoading(true);
+        setIsLoading(true);
 
         axios
             .post('http://localhost:5000/api/Login', {
@@ -46,12 +46,16 @@ export default function Login (){
 
                     if(parseJwt().Role === '1') {
                         navigate('/Equipamento')
+                        console.log(`login realizado`)
+                        isLoading(false)
                     }
                     else if(parseJwt().Role === '2'){
                         navigate('/Equipamento')
+                        isLoading(false)
                     }
                     else{
                         navigate('/Login');
+                        isLoading(false)
                     }
                     
                 }
@@ -63,10 +67,6 @@ export default function Login (){
                 setErroMensagem (erro)
                 setIsLoading(false)
           })
-    }
-
-    function atualizaStateCampo (campo){
-        campo.target.name = campo.target.value 
     }
         
     
@@ -99,8 +99,8 @@ export default function Login (){
                                         className="input-login"
                                         type="email"
                                         name="setEmail"
-                                        value={this.state.email}
-                                        onChange={this.atualizaStateCampo}
+                                        value= {email}
+                                        onChange={(event) => setEmail(event.target.value)}
                                         placeholder="example@email.com"
                                     /> 
                                 </div>
@@ -110,19 +110,19 @@ export default function Login (){
                                         className="input-login"
                                         type="password"
                                         name="setSenha"
-                                        value={this.state.senha}
-                                        onChange={this.atualizaStateCampo}
+                                        value={senha}
+                                        onChange={(event) => setSenha(event.target.value)}
                                         placeholder="* * * * *"
                                     />
                                 </div>
 
-                                <p style={{ color : 'red'}}> {this.state.erroMensagem} </p>
+                                <p style={{ color : 'red'}}> {erroMensagem} </p>
 
                                 <p className="login-recuperar" style={{ color : 'white', fontSize : 12,}} href="/Recuperar-senha">Esqueceu a senha</p>
                           
 
                                     {
-                                        this.state.isLoading === true && (
+                                        isLoading === true && (
                                             <button
                                             type="submit"
                                             disabled
@@ -135,13 +135,13 @@ export default function Login (){
                                     }
 
                                     {
-                                        this.state.isLoading === false && (
+                                        isLoading === false && (
                                             <button
                                             className="btn-login"
                                             id="btn__login"
                                             type="submit"
                                             disabled={
-                                                this.state.email === '' || this.state.senha === ''
+                                                email === '' || senha === ''
                                                 ? 'none'
                                                 : ''
                                             }

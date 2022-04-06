@@ -6,36 +6,37 @@ using Projeto_Rojo.Interfaces;
 using Projeto_Rojo.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Projeto_Rojo.Controllers
 {
-    
-            [Produces("application/json")]
 
-            [Route("api/[controller]")]
+    [Produces("application/json")]
 
-            [ApiController]
-            public class EquipamentoController : ControllerBase
-            {
+    [Route("api/[controller]")]
 
-                private IEquipamentoRepository equipamentoRepository { get; set; }
+    [ApiController]
+    public class EquipamentoController : ControllerBase
+    {
 
-
-                public EquipamentoController()
-                {
-                     equipamentoRepository = new EquipamentoRepository();
-                }
+        private IEquipamentoRepository equipamentoRepository { get; set; }
 
 
-                [HttpGet]
+        public EquipamentoController()
+        {
+            equipamentoRepository = new EquipamentoRepository();
+        }
+
+
+                [HttpGet("lista-meus-equipamentos")]
                 public IActionResult Get()
                 {
                     try
                     {
-                        // Retorna a resposta da requisição fazendo a chamada para o método
-                        return Ok(equipamentoRepository.Listar());
+                        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                        return Ok(equipamentoRepository.Listar(idUsuario));
                     }
                     catch (Exception erro)
                     {
@@ -44,13 +45,12 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [HttpGet("{id}")]
-                public IActionResult GetById(int id)
+                [HttpGet("equipamento/{id}")]
+                public IActionResult GetById(int idEquipamento)
                 {
                     try
                     {
-                        // Retora a resposta da requisição fazendo a chamada para o método
-                        return Ok(equipamentoRepository.BuscarPorId(id));
+                        return Ok(equipamentoRepository.BuscarPorId(idEquipamento));
                     }
                     catch (Exception erro)
                     {

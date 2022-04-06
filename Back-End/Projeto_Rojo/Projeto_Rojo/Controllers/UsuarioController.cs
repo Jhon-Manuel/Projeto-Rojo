@@ -7,6 +7,7 @@ using Projeto_Rojo.Interfaces;
 using Projeto_Rojo.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -38,12 +39,13 @@ namespace Projeto_Rojo.Controllers
                 }
             }
 
-            [HttpGet("{id}")]
+            [HttpGet("usuario/{id}")]
             public IActionResult GetById(int id)
             {
                 try
                 {
-                    return Ok(usuarioRepository.BuscarPorId(id));
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                return Ok(idUsuario);
                 }
                 catch (Exception erro)
                 {
