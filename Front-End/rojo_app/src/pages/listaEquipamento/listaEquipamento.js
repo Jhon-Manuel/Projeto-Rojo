@@ -2,9 +2,16 @@ import axios from "axios";
 import { Component, useEffect, useState } from "react";
 
 export default function ListaEquipamento (){
+    
+    const [isLoading, setIsLoading] = useState('');
     const [ listaEquipamento, setListaEquipamento ] = useState([])
 
+
+
     function buscarMeusEquipamentos() {
+
+        setIsLoading(true);
+
         axios.post('http://localhost:5000/api/equipamento/ ', {
             headers : {
                 'Authorization' : 'Bearer' + localStorage.getItem('usuario-login')
@@ -22,7 +29,12 @@ export default function ListaEquipamento (){
 
     useEffect( buscarMeusEquipamentos, [] );
 
+    function listaTipoequipamento(){
+        axios.get('http://localhost:5000/api/Usuario/',{})
 
+        .then(resposta => resposta.status === 201)
+    }
+    
     
 
     return(

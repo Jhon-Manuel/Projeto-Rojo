@@ -1,4 +1,5 @@
 import axios from "axios";
+import React,{ useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import Filtro from '../../assets/icon/icon-filtro.png';
@@ -24,7 +25,8 @@ export default function CadastroEquipamento() {
 
     var navigate = useNavigate();
     
-    const [Loading, setLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [condicaoAtualizar, setCondicaoAtualizar] = useState(false);
     const [boolPut, setBoolPut] = useState(false);
 
     //States Usuario
@@ -32,7 +34,6 @@ export default function CadastroEquipamento() {
     const [cargo, setCargo] = useState('');
 
     //States Equipamento
-    const [idEquipamento, setIdEquipamento] = useState(0);
     const [idTipoEquipamento, setIdTipoEquipamento] = useState(0);
     const [modelo, setModelo] = useState(0);
     const [numeroSerie, setNumeroSerie] = useState(0);
@@ -45,21 +46,13 @@ export default function CadastroEquipamento() {
     const [descricao, setDescricao] = useState('');
     const [condicao, setCondicao] =useState('');
 
-    //Listas
-    const [listaTipoEquipamento, setListaEquipamento] = useState([]);
-
-
-    function listaTipoequipamento(){
-        axios.get('http://localhost:5000/api/Usuario/',{})
-
-        .then(resposta => resposta.status === 201)
-    }
 
     function buscarUsuarioPorId(event)
     {
         event.preventDefault();
         
-        axios.get('http://localhost:5000/api/Usuario/', {
+        axios
+        .get('http://localhost:5000/api/Usuario/', {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
             }
@@ -75,6 +68,27 @@ export default function CadastroEquipamento() {
         .catch(erro => console.log(erro))
 
     }
+
+    function cadastrarEquipamento (event) 
+    {
+        event.preventDefault();
+
+        let equipamentoNovo = {
+            Modelo : modelo,
+            NumeroSerie : numeroSerie,
+            GateWay : gateWay,
+            Mask : ip,
+            Dns : dns,
+            Porta : porta,
+            Condicao : condicao,
+            Descricao : descricao,
+            Data : descricao,
+        }
+
+        axios
+        .post('http://localhost:5000/api/Equipamento/', {equipamentoNovo})
+    }
+    
     
         return(   
             <div className="container-equipamento">
@@ -229,7 +243,7 @@ export default function CadastroEquipamento() {
 
                                                 <div className="container-info-dados">
 
-                                                    <form onSubmit={this.atualizaEquipamento}>
+                                                    <form onSubmit={CadastroEquipamento}>
                                                         <div className="dados">
                                                             <div className="info-1">
                                                                 <div>
@@ -243,8 +257,8 @@ export default function CadastroEquipamento() {
                                                                         name="tipoEquipamento"
                                                                         value={idTipoEquipamento}
                                                                         placeholder="Tipo Equipamento"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -260,8 +274,8 @@ export default function CadastroEquipamento() {
                                                                         name="Modelo"
                                                                         value={this.state.Modelo}
                                                                         placeholder="Modelo"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setModelo(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -274,10 +288,10 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="Gateway"
-                                                                        value={this.state.Gateway}
+                                                                        value={gateWay}
                                                                         placeholder="GateWay"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setGateWay(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -290,10 +304,10 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="IP"
-                                                                        value={this.state.IP}
+                                                                        value={ip}
                                                                         placeholder="IP"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setIp(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -306,10 +320,10 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="descricao"
-                                                                        value={this.state.descricao}
+                                                                        value={descricao}
                                                                         placeholder="Descrição"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setDescricao(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
                                                             </div>
@@ -324,10 +338,10 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="DNS"
-                                                                        value={this.state.DNS}
+                                                                        value={dns}
                                                                         placeholder="Modelo"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setDns(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
 
@@ -340,10 +354,10 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="Porta"
-                                                                        value={this.state.Porta}
+                                                                        value={porta}
                                                                         placeholder="Porta"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setDescricao(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -356,15 +370,15 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="NumeroSerie"
-                                                                        value={this.state.NumeroSerie}
+                                                                        value={numeroSerie}
                                                                         placeholder="Numero de Série"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setNumeroSerie(event.target.value)}
+                                                                        disabled = {condicaoAtualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
                                                                 
                                                                 {
-                                                                    this.state.isLoading === true && (
+                                                                    isLoading === true && (
 
                                                                         <button
                                                                         type="submit"
@@ -378,18 +392,18 @@ export default function CadastroEquipamento() {
 
                                                                 }
                                                                 {
-                                                                    this.state.isLoading === false &&(
+                                                                    isLoading === false &&(
                                                                         <button
                                                                             type="submit"
                                                                             className="btn__login-2"
                                                                             disabled={
-                                                                                this.state.tipoEquipamento === '' || 
-                                                                                this.state.Modelo === '' || 
-                                                                                this.state.NumeroSerie === '' |
-                                                                                this.state.Gateway === '' ||
-                                                                                this.state.DNS === ''||
-                                                                                this.state.IP === ''||
-                                                                                this.state.Porta === '' 
+                                                                                idTipoEquipamento === '' || 
+                                                                                modelo === '' || 
+                                                                                numeroSerie === '' |
+                                                                                gateWay === '' ||
+                                                                                dns === ''||
+                                                                                ip === ''||
+                                                                                porta === '' 
                                                                                 ? 'none'
                                                                                 : ''
                                                                             }
@@ -407,7 +421,7 @@ export default function CadastroEquipamento() {
                                                     <div className="box-img" />s
 
                                                     <input type="file"/>
-                                                    <button onClick={this.upload }>Enviar</button>
+                                                    <button onClick={CadastroEquipamento}>Enviar</button>
                                                     
                                                 </div>
                                             </div>

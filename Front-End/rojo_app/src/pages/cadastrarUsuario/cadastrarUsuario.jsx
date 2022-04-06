@@ -18,39 +18,42 @@ export default function CadastroUsuario(){
     const [tipoUsuario, setTipoUsuario] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    function CadastrarUsuario(event) {
+    function FazerCadastroUsuario(event) {
 
         event.preventDefault();
 
         setLoading(true)
 
-        let usuario = {
-            tipoUsuario : tipoUsuario,
-            nome: nome,
-            email: email,
-            senha: senha,
-            contato : contato,
-            cargo : cargo,
-            razaoSocial : razaoSocial,
+        // let usuario = new Object({
+        //     "tipoUsuario" : tipoUsuario,
+        //     "nome": nome,
+        //     "email": email,
+        //     "senha": senha,
+        //     "contato" : contato,
+        //     "cargo" : cargo,
+        //     "razaoSocial" : razaoSocial,
          
-        }
+        // })
 
-        axios.post('https://localhost:5000/api/Usuario', usuario, {
-
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
-            }
+        axios.post('https://localhost:5000/api/Usuario', {
+            "tipoUsuario" : tipoUsuario,
+            "nome": nome,
+            "email": email,
+            "senha": senha,
+            "contato" : contato,
+            "cargo" : cargo,
+            "razaoSocial" : razaoSocial,
         })
 
             .then((resposta) => {
-                if (resposta.status === 200) {
+                if (resposta.status === 201) {
                     setLoading(false)
                     console.log('usuario cadastrado !')
                 }
 
             })
 
-            .then(erro => console.log(erro))
+            .catch(erro => console.log(erro))
     }
         return(
             <div className="container-login">
@@ -72,7 +75,7 @@ export default function CadastroUsuario(){
 
                         <div className="box-form-login-2">
 
-                            <form  className="form-login-2" onSubmit={CadastrarUsuario}>
+                            <form  className="form-login-2" onSubmit={(event) => FazerCadastroUsuario(event)}>
                                 <div className="cont-login">
 
                                     <div className="box-cadastro-1">

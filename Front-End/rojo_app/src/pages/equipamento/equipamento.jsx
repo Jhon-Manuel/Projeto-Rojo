@@ -2,7 +2,7 @@ import { Component } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-
+import { useState, useNavigate } from "react";
 
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
@@ -48,15 +48,30 @@ export default function Equipamento(){
     const [arquivo, setArquivo] = useState('');
     const [descricao, setDescricao] = useState('');
     const [condicao, setCondicao] =useState('');
+    const [atualizar, setAtualizar]= useState(false);
     
     //Listas 
     const [listaEquipamento, setListaEquipamento] = useState([]);  
 
-    buscarPorId = (event) => {
+    function buscarUsuarioPorId(event)
+    {
         event.preventDefault();
         
-        axios.get('http://localhost:5000/api/equipamento/', {
+        axios.get('http://localhost:5000/api/Usuario/', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
+            }
         })
+
+        .then((resposta) => {
+            if(resposta.status === 200){
+                navigate('/Equipamento')
+            }
+                
+            }
+        )
+        .catch(erro => console.log(erro))
+
     }
 
     function atualizarEquipamento(event)
@@ -72,46 +87,20 @@ export default function Equipamento(){
             Porta : porta,
             Condicao : condicao,
             Descricao : descricao,
+
         }
 
-        axios.put('http://localhost:5000/api/Equipamento' + idEquipamento, {})
-
-    }
-
-
-    upload = (event) => {
-        event.preventDefault();
-
-        const formData = new FormData();
-
-        formData.append(
-            'arquivo', 
-            this.state.arquivo
-        )
-
-        axios.post('http://localhost:5000/api/equipamento/', formData, {
-            headers : {
-                Authorization : 'Bearer' + localStorage.getItem
-                ('usuario-login')
+        axios.put('http://localhost:5000/api/Equipamento' + idEquipamento, {equipamento})
+        .then((resposta) => {
+            if(resposta.status === 201)
+            {
+                return console.log('Atualização realizada')
             }
-            
-        }) 
-        .catch( (erro) => console.log(erro))
-        .then(console.log("Arquivo Enviado"))
+        })
+        .catch(erro => console.log(erro))
     }
 
-    atualizaStateCampo = (campo) => {
-        this.setState({ [campo.target.name] : campo.target.value })
-    }
-
-    atualizaEquipamento = (campo) => {
-        campo.preventDefault();
-
-        axios
-        .put('')
-    }
-
-    render(){
+    
         return(   
             <div className="container-equipamento">
                 <div>
@@ -277,10 +266,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="tipoEquipamento"
-                                                                        value={this.state.tipoEquipamento}
+                                                                        value={idTipoEquipamento}
                                                                         placeholder="Tipo Equipamento"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -294,10 +283,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="Modelo"
-                                                                        value={this.state.Modelo}
+                                                                        value={modelo}
                                                                         placeholder="Modelo"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setModelo(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -310,10 +299,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="Gateway"
-                                                                        value={this.state.Gateway}
+                                                                        value={gateWay}
                                                                         placeholder="GateWay"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setGateWay(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -326,10 +315,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="IP"
-                                                                        value={this.state.IP}
+                                                                        value={ip}
                                                                         placeholder="IP"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setIp(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -342,10 +331,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="descricao"
-                                                                        value={this.state.descricao}
+                                                                        value={descricao}
                                                                         placeholder="Descrição"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setDescricao(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
                                                             </div>
@@ -360,10 +349,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="DNS"
-                                                                        value={this.state.DNS}
-                                                                        placeholder="Modelo"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        value={dns}
+                                                                        placeholder="DNS"
+                                                                        onChange={(event) => setDns(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
 
@@ -376,10 +365,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="Porta"
-                                                                        value={this.state.Porta}
+                                                                        value={porta}
                                                                         placeholder="Porta"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setPorta(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div>
 
@@ -392,10 +381,10 @@ export default function Equipamento(){
                                                                         className="input"
                                                                         type="text"
                                                                         name="NumeroSerie"
-                                                                        value={this.state.NumeroSerie}
+                                                                        value={numeroSerie}
                                                                         placeholder="Numero de Série"
-                                                                        onChange={this.atualizaStateCampo}
-                                                                        disabled = {this.state.atualizar === true ? 'none' : ''}
+                                                                        onChange={(event) => setNumeroSerie(event.target.value)}
+                                                                        disabled = {atualizar === true ? 'none' : ''}
                                                                     /> 
                                                                 </div> 
                                                             </div>
@@ -403,12 +392,12 @@ export default function Equipamento(){
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <div className="container-img">
+                                                {/* <div className="container-img">
                                                     <div className="box-img" />
 
                                                     <input type="file"/>
-                                                    <button onClick={this.upload }>Enviar</button>
-                                                </div>
+                                                    <button onClick={this.uploadImg }>Enviar</button>
+                                                </div> */}
                                             </div>
 
                                         </div>
@@ -418,7 +407,7 @@ export default function Equipamento(){
                 </div>
             </div>
         );
-    }
+    
 
 }
                    
