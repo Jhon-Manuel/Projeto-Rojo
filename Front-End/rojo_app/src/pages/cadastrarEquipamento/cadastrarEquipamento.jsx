@@ -1,10 +1,11 @@
 import axios from "axios";
 import React,{ useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import Filtro from '../../assets/icon/icon-filtro.png';
-import Editar from '../../assets/icon/icon-editar.png';
-import Ferramenta from '../../assets/icon/icon-ferramenta.png';
+// import Filtro from '../../assets/icon/icon-filtro.png';
+// import Editar from '../../assets/icon/icon-editar.png';
+// import Ferramenta from '../../assets/icon/icon-ferramenta.png';
 
 import Logo from '../../assets/img/logoRojo.png';
 import Sair from '../../assets/icon/icon-sair.png';
@@ -22,6 +23,7 @@ import '../../assets/css/equipamento.css';
 
 
 export default function CadastroEquipamento() {
+
 
     var navigate = useNavigate();
     
@@ -44,8 +46,21 @@ export default function CadastroEquipamento() {
     const [img64, setImg64] = useState(0);
     const [arquivo, setArquivo] = useState('');
     const [descricao, setDescricao] = useState('');
-    const [condicao, setCondicao] =useState('');
+    const [data, setData] = useState(new Date())
+    const [condicao, setCondicao] = useState('');
 
+    const [dadoUsuario, setDadoUsuario] = useState([]);
+    const [dadoEquipamento, setDadoEquipamento] =useState([]);
+
+
+    const realizarLogout = async () => {
+        try {
+          await AsyncStorage.removeItem('userToken');
+          navigate('/'); 
+        } catch (error) {
+          console.warn(error);
+        }
+      };
 
     function buscarUsuarioPorId(event)
     {
@@ -58,11 +73,10 @@ export default function CadastroEquipamento() {
             }
         })
 
-        .then((resposta) => {
-            if(resposta.status === 200){
-                navigate('/Equipamento')
-            }
-                
+        .then((resposta) =>
+            {
+                setDadoUsuario(resposta.data);
+                console.log(dadoUsuario);
             }
         )
         .catch(erro => console.log(erro))
@@ -73,21 +87,44 @@ export default function CadastroEquipamento() {
     {
         event.preventDefault();
 
-        let equipamentoNovo = {
-            Modelo : modelo,
-            NumeroSerie : numeroSerie,
-            GateWay : gateWay,
-            Mask : ip,
-            Dns : dns,
-            Porta : porta,
-            Condicao : condicao,
-            Descricao : descricao,
-            Data : descricao,
-        }
+        var formData = new FormData();
 
-        axios
-        .post('http://localhost:5000/api/Equipamento/', {equipamentoNovo})
+        const target = document.getElementById('arquivo');
+        const file = target.files[0]
+        formData.append(`arquivo`, file, file.name);
+
+        formData.append( `Modelo`, modelo);
+        formData.append('NumeroSerie', numeroSerie);
+        formData.append('GateWay', gateWay);
+        formData.append('Mask', ip);
+        formData.append('Dns', dns);
+        formData.append('Porta', porta);
+        formData.append('Condicao', condicao);
+        formData.append('Descricao', descricao);
+        formData.append('Data', data);
+
+
+        axios({
+            method: "post",
+            url: "http://localhost:5000/api/Equipamento",
+            data: formData,
+            headers: {"Content-Type" : "multipart/form-data" },
+        })
+        .then( function (resposta){
+            setDadoEquipamento(resposta.data)
+        })
+
+        .then( function (resposta) {
+            console.log(resposta);
+            navigate('/Equipamento/'+ dadoEquipamento.IdEquipamento)
+        })
+        
+        .catch( function (resposta) {
+            console.log(resposta);
+        });
     }
+
+    
     
     
         return(   
@@ -158,7 +195,7 @@ export default function CadastroEquipamento() {
                                 </div>
 
                             </div>
-                            <div class="btn-container-mode">
+                            <div className="btn-container-mode">
                                     <p> MODO ESCURO</p>
                                     <button className="btn-mode">
                                         <div className="btn-mode-interruptor">
@@ -179,18 +216,18 @@ export default function CadastroEquipamento() {
                                         />
                                         <div className="perfil-texto">
                                             <p
-                                            className="perfil-nome">{this.state.nome}</p>
+                                            className="perfil-nome">{nome}</p>
                                                                
                                             <p
                                             className="perfil-cargo">
-                                                {this.state.cargo}
+                                                {cargo}
                                             </p>
                                             
                                         </div>
                                         <div>
 
                                             <button
-                                                onClick={this.efetuarLogout}
+                                                onClick={realizarLogout}
                                             >
                                                 <img src={Sair} alt="icone sair"/>
                                             </button>
@@ -206,30 +243,7 @@ export default function CadastroEquipamento() {
                         <h2 className="todo-titulo">Cadastrar Equipamento</h2>
                     </header>
                 
-                    <section>
-                        <div className="container-direita">
-                            <div className="barra-direita">
-                                <div className="button">
-
-                                    <button>
-                                        <img src={Editar} alt="icone filtro"/>
-                                    </button>
-
-                                    <button
-                                        onClick={this.alterarCondicao}
-                                    >
-                                    <img src={Filtro} alt="icone editar"/>
-                                
-                                    </button>
-
-                                    <button>
-                                        <img src={Ferramenta} alt="Icone ferramenta"/>
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </section>
+                    
 
                     <section>
                             
@@ -243,7 +257,7 @@ export default function CadastroEquipamento() {
 
                                                 <div className="container-info-dados">
 
-                                                    <form onSubmit={CadastroEquipamento}>
+                                                    <form onSubmit={cadastrarEquipamento}>
                                                         <div className="dados">
                                                             <div className="info-1">
                                                                 <div>
@@ -272,7 +286,7 @@ export default function CadastroEquipamento() {
                                                                         className="input"
                                                                         type="text"
                                                                         name="Modelo"
-                                                                        value={this.state.Modelo}
+                                                                        value={modelo}
                                                                         placeholder="Modelo"
                                                                         onChange={(event) => setModelo(event.target.value)}
                                                                         disabled = {condicaoAtualizar === true ? 'none' : ''}
@@ -417,13 +431,13 @@ export default function CadastroEquipamento() {
                                                         </div>
                                                     </form>
                                                 </div>
-                                                <div className="container-img">
+                                                {/* <div className="container-img">
                                                     <div className="box-img" />s
 
                                                     <input type="file"/>
                                                     <button onClick={CadastroEquipamento}>Enviar</button>
                                                     
-                                                </div>
+                                                </div> */}
                                             </div>
 
                                         </div>

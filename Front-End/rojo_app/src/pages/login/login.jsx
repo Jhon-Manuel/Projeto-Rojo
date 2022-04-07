@@ -1,12 +1,12 @@
 import axios from 'axios';
-import auth from "../../services/auth.js";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from 'react';
 
+import { buscarUsuarioPorId } from '../../services/auth';
 
 import Logo from '../../assets/img/logoRojo.png';
 
 import '../../assets/css/login.css';
-import { useState } from 'react';
 
 
 export default function Login() {
@@ -29,37 +29,31 @@ export default function Login() {
                 email: emailUsuario,
                 senha: senhaUsuario,
             })
+            
+        
+            .then((response) =>
+            {
 
-            .then((response) => {
-
-                if (response.status === 200) {
+                if (response.status === 200)
+                {
                     localStorage.setItem('usuario-login', response.data.token)
-
-                    //console.log('Meu token é: ' + response.data.token)
 
                     setIsLoading(false);
 
-                    //let base64 = localStorage.getItem('usuario-login').split('.')[1]; 
-
-                    //JSON.parse(window.atob(base64))
-
-                    
-                        navigate('/Equipamento')
-                        console.log(`login realizado`)
-                        isLoading(false)
-                    
+                    navigate('/BemVindo')
+                    console.log(`login realizado`)                    
                     
                         
+                }
+                    else {
+                        navigate('/Login');
+                        isLoading(false)
                     }
-                    // else {
-                    //     navigate('/Login');
-                    //     isLoading(false)
-                    // }
                 }
             )
 
             .catch(erro => {
-                erro = (erro + ' Email ou senha incorretos')
+                erro = (' Email ou senha incorretos')
                 setErroMensagem(erro)
                 setIsLoading(false)
             })

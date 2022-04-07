@@ -1,60 +1,57 @@
 import axios from 'axios';
-import { parseJwt, usuarioAutenticado } from "../../services/auth";
-import { Link } from "react-router-dom";
+import { useState } from 'react';
+import { Link,useNavigate } from "react-router-dom";
 
 import Logo from '../../assets/img/logoRojo.png';
 
 import '../../assets/css/login.css';
-import { useState } from 'react';
 
-export default function CadastroUsuario(){
+export default function CadastroUsuario() {
     
     const [nome, setNome] = useState('');
-    const [email, setEmail] = useState('');
-    const [senha, setSenha] = useState('');
+    const [emailUsuario, setEmailUsuario] = useState('');
+    const [senhasuario, setSenhaUsuario] = useState('');
     const [contato, setContato] = useState('');
     const [cargo, setCargo] = useState('');
     const [razaoSocial, setRazaoSocial] = useState('');
     const [tipoUsuario, setTipoUsuario] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    function FazerCadastroUsuario(event) {
+    var navigate = useNavigate()
+
+    const FazerCadastroUsuario = (event) => {
 
         event.preventDefault();
 
         setLoading(true)
 
-        // let usuario = new Object({
-        //     "tipoUsuario" : tipoUsuario,
-        //     "nome": nome,
-        //     "email": email,
-        //     "senha": senha,
-        //     "contato" : contato,
-        //     "cargo" : cargo,
-        //     "razaoSocial" : razaoSocial,
+        let usuario = {
+            tipoUsuario : tipoUsuario,
+            nome: nome,
+            email: emailUsuario,
+            senha: senhasuario,
+            contato : contato,
+            cargo : cargo,
+            razaoSocial : razaoSocial,
          
-        // })
+        }
 
-        axios.post('https://localhost:5000/api/Usuario', {
-            "tipoUsuario" : tipoUsuario,
-            "nome": nome,
-            "email": email,
-            "senha": senha,
-            "contato" : contato,
-            "cargo" : cargo,
-            "razaoSocial" : razaoSocial,
+        axios
+        .post("http://localhost:5000/api/Usuario/cadastro-usuario", usuario, {})
+
+        .then((response) => {
+
+            if (response.status === 201) {
+                setLoading(false)
+                console.log('Usuario Cadastrado !')
+                navigate('/BemVindo')
+            }
+
         })
-
-            .then((resposta) => {
-                if (resposta.status === 201) {
-                    setLoading(false)
-                    console.log('usuario cadastrado !')
-                }
-
-            })
-
-            .catch(erro => console.log(erro))
+        .catch(erro => console.log(erro))
     }
+
+
         return(
             <div className="container-login">
                  <header>
@@ -75,7 +72,7 @@ export default function CadastroUsuario(){
 
                         <div className="box-form-login-2">
 
-                            <form  className="form-login-2" onSubmit={(event) => FazerCadastroUsuario(event)}>
+                            <form  className="form-login-2" onSubmit={FazerCadastroUsuario}>
                                 <div className="cont-login">
 
                                     <div className="box-cadastro-1">
@@ -121,8 +118,8 @@ export default function CadastroUsuario(){
                                                 className="input-login"
                                                 type="email"
                                                 name="email"
-                                                value={email}
-                                                onChange={event => setEmail(event.target.value)}
+                                                value={emailUsuario}
+                                                onChange={event => setEmailUsuario(event.target.value)}
                                                 placeholder="example@email.com"
                                             /> 
                                         </div>
@@ -131,8 +128,8 @@ export default function CadastroUsuario(){
                                             <input
                                                 className="input-login"
                                                 type="password"
-                                                value={senha}
-                                                onChange={event => setSenha(event.target.value)}
+                                                value={senhasuario}
+                                                onChange={event => setSenhaUsuario(event.target.value)}
                                                 placeholder="* * * * *"
                                             />
                                         </div>
@@ -170,7 +167,7 @@ export default function CadastroUsuario(){
                                             id="btn__login"
                                             type="submit"
                                             disabled={
-                                                email === '' || senha === ''
+                                                emailUsuario === '' || senhasuario === ''
                                                 ? 'none'
                                                 : ''
                                             }
@@ -188,6 +185,6 @@ export default function CadastroUsuario(){
                     </div>
             </div>
         )
-                                }
+}
 
 

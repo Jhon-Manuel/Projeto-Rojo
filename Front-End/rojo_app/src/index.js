@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import {createRoot} from 'react-dom/client';
 import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom';
 
@@ -14,6 +13,7 @@ import Login from './pages/login/login';
 import CadastrarUsuario from './pages/cadastrarUsuario/cadastrarUsuario';
 import CadastrarEquipamento from './pages/cadastrarEquipamento/cadastrarEquipamento';
 import Topologia from './pages/topologia/topologia';
+import BemVindo from './pages/bemVindo/bemVindo';
 
 
 import reportWebVitals from './reportWebVitals';
@@ -40,11 +40,9 @@ routing.render(
         <Route path="/Login" element={<Login />}/>
         <Route path="/CadastrarUsuario" element={<CadastrarUsuario/>}/>
         <Route path="/CadastrarEquipamento" element={<CadastrarEquipamento/>}/>
+        <Route path="/BemVindo" element={<BemVindo/>}/>
         <Route path="/Erro" element={<Erro/>} />
-        <Route path='/Zabbix' element={() => {
-            window.location.href ='https://www.zabbix.com/';
-            return null;
-        }}/>
+
         <Route
         path="/*"
         element={<Navigate to="/Erro" replace />}
@@ -54,9 +52,4 @@ routing.render(
   </Router>
 );
 
-
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

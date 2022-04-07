@@ -1,8 +1,7 @@
-import { Component } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-
-import { useState, useNavigate } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from "react";
 
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
@@ -26,8 +25,6 @@ import '../../assets/css/equipamento.css';
 
 export default function Equipamento(){
     
-    var navigate = useNavigate();
-    
     const [Loading, setLoading] = useState(false);
     const [boolPut, setBoolPut] = useState(false);
 
@@ -49,9 +46,21 @@ export default function Equipamento(){
     const [descricao, setDescricao] = useState('');
     const [condicao, setCondicao] =useState('');
     const [atualizar, setAtualizar]= useState(false);
+    const [alterarCondicaoAtualizar, setAlterarCondicaoAtualizar] = useState(false)
     
     //Listas 
-    const [listaEquipamento, setListaEquipamento] = useState([]);  
+    // const [listaEquipamento, setListaEquipamento] = useState([]);  
+    
+    var navigate = useNavigate();
+
+    const realizarLogout = async () => {
+        try {
+          await AsyncStorage.removeItem('userToken');
+          navigate('/'); 
+        } catch (error) {
+          console.warn(error);
+        }
+      };
 
     function buscarUsuarioPorId(event)
     {
@@ -72,6 +81,22 @@ export default function Equipamento(){
         )
         .catch(erro => console.log(erro))
 
+    }
+
+    function buscarImagemUsuario (event) 
+    {
+        event.preventDefault();
+
+        axios
+        .get(`http://localhost:5000/api/Usuario/bd/`,{
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
+            }
+        })
+        .then((resposta => {
+                setImg64(resposta.data)
+
+        }))
     }
 
     function atualizarEquipamento(event)
@@ -186,22 +211,22 @@ export default function Equipamento(){
                                 <div className="container-perfil">
                                         <div
                                             className="perfil-imagem"
-                                            
+                                            image src={{uri: 'data:image/jpg;img64,${setImg64}'}}
                                         />
                                         <div className="perfil-texto">
                                             <p
-                                            className="perfil-nome">{this.state.nome}</p>
+                                            className="perfil-nome">{nome}</p>
                                                                
                                             <p
                                             className="perfil-cargo">
-                                                {this.state.cargo}
+                                                {cargo}
                                             </p>
                                             
                                         </div>
                                         <div>
 
                                             <button
-                                                onClick={this.efetuarLogout}
+                                                onClick={realizarLogout}
                                             >
                                                 <img src={Sair} alt="icone sair"/>
                                             </button>
@@ -227,7 +252,7 @@ export default function Equipamento(){
                                     </button>
 
                                     <button
-                                        onClick={this.alterarCondicao}
+                                        onClick={alterarCondicaoAtualizar}
                                     >
                                     <img src={Filtro} alt="icone editar"/>
                                 
@@ -248,13 +273,13 @@ export default function Equipamento(){
                                         
                                         <div className="con-equi-info">
                                             <div className="head-equi-info">
-                                                <p>Dados {this.state.Modelo}</p>
+                                                <p>Dados {modelo}</p>
                                             </div>
                                             <div className="container-box-info-dados">
 
                                                 <div className="container-info-dados">
 
-                                                    <form onSubmit={this.atualizaEquipamento}>
+                                                    <form onSubmit={atualizarEquipamento}>
                                                         <div className="dados">
                                                             <div className="info-1">
                                                                 <div>

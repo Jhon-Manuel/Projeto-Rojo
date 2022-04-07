@@ -120,6 +120,19 @@ header h2{
   margin-bottom: 80px;
 }
 
+.container-box-info-dados-3{
+  width: 847px;
+  height: 500px;
+  /* background-color: violet; */
+ 
+  display: flex;  
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 80px;
+}
+
+
 .container-info-dados{
   width: 545px;
   height: 500px;

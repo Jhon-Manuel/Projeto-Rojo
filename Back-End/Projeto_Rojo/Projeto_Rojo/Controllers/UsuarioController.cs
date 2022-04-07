@@ -53,12 +53,11 @@ namespace Projeto_Rojo.Controllers
                 }
             }
 
-            [HttpPost]
+            [HttpPost("cadastro-usuario")]
             public IActionResult Post(Usuario novoUsuario)
             {
                 try
                 {
-
                     usuarioRepository.Cadastrar(novoUsuario);
 
                     return StatusCode(201);
