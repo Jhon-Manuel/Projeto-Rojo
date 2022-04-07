@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import { buscarUsuarioPorId } from '../../services/auth';
 
@@ -17,6 +17,25 @@ export default function Login() {
 
     var navigate = useNavigate();
 
+    function buscarUsuarioPorId()
+    {        
+        axios
+        .get('http://localhost:5000/api/Usuario/', {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem("usuario-login")
+            }
+        })
+
+        .then((resposta) =>
+            {
+                localStorage.setItem("info",resposta.data);
+                console.log(localStorage.getItem("info"));
+            }
+        )
+        .catch(erro => console.log(erro))
+
+    }
+
     function FazerLogin(event) {    
         event.preventDefault();
 
@@ -30,7 +49,6 @@ export default function Login() {
                 senha: senhaUsuario,
             })
             
-        
             .then((response) =>
             {
 
@@ -38,20 +56,30 @@ export default function Login() {
                 {
                     localStorage.setItem('usuario-login', response.data.token)
 
-                    setIsLoading(false);
+                    setIsLoading(false)
 
                     navigate('/BemVindo')
-                    console.log(`login realizado`)                    
-                    
-                        
+                    console.log(`login realizado`)                       
                 }
                     else {
                         navigate('/Login');
                         isLoading(false)
-                    }
+                    
                 }
-            )
-
+                })
+        
+              
+            .then((response) => 
+            {
+                if (response.status === 200) {
+                    
+                    navigate('/BemVindo')
+                }
+                else{
+                    navigate('/Login');
+                    isLoading(false)
+                }
+            })
             .catch(erro => {
                 erro = (' Email ou senha incorretos')
                 setErroMensagem(erro)

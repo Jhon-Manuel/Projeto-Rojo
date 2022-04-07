@@ -36,25 +36,27 @@ export default function BemVindo()
     const [dadoUsuario, setDadoUsuario] = useState([]);
 
 
-    function buscarUsuarioPorId()
-    {        
-        axios
-        .get('http://localhost:5000/api/Usuario/', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("usuario-login")
-            }
-        })
+    // async function buscarUsuarioPorId()
+    // {        
+    //     axios
+    //     .get('http://localhost:5000/api/Usuario/', {
+    //         headers: {
+    //             Authorization: 'Bearer ' + localStorage.getItem("usuario-login")
+    //         }
+    //     })
 
-        .then((resposta) =>
-            {
-                localStorage.setItem("info",resposta.data);
-                console.log(localStorage.gsItem("info"));
-            }
-        )
-        .catch(erro => console.log(erro))
+    //     .then((resposta) =>
+    //         {
+    //             localStorage.setItem("info",resposta.data);
+    //             console.log(localStorage.getItem("info"));
+    //         }
+    //     )
+    //     .catch(erro => console.log(erro))
 
-    }
+    // }
 
+    useEffect(() => (setDadoUsuario = localStorage.getItem("info")),[])
+    
     const realizarLogout = async () => {
         try {
           await AsyncStorage.removeItem('usuario-login');
@@ -64,28 +66,7 @@ export default function BemVindo()
         }
       };
 
-    function buscarUsuarioPorId(event)
-    {
-        event.preventDefault();
-        
-        axios
-        .get('http://localhost:5000/api/Usuario/', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
-
-        .then((resposta) =>
-            {
-                setDadoUsuario(resposta.data);
-                console.log(dadoUsuario);
-            }
-        )
-        .catch(erro => console.log(erro))
-
-    }
-
-    useEffect(buscarUsuarioPorId)
+    // useEffect(()=> (buscarUsuarioPorId),[])
 
     return(   
         <div className="container-equipamento">

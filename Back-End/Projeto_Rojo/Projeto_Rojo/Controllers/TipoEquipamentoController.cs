@@ -5,6 +5,7 @@ using Projeto_Rojo.Interfaces;
 using Projeto_Rojo.Repositories;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,7 +28,8 @@ namespace Projeto_Rojo.Controllers
         {
             try
             {
-                return Ok(TipoEquipamentoRepository.Listar());
+                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+                return Ok(TipoEquipamentoRepository.Listar(int idUsuario));
             }
             catch (Exception erro)
             {

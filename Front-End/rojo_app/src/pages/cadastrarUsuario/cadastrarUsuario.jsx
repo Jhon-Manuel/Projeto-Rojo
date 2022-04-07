@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link,useNavigate } from "react-router-dom";
 
 import Logo from '../../assets/img/logoRojo.png';
@@ -8,6 +8,8 @@ import '../../assets/css/login.css';
 
 export default function CadastroUsuario() {
     
+
+    //States Usuario
     const [nome, setNome] = useState('');
     const [emailUsuario, setEmailUsuario] = useState('');
     const [senhasuario, setSenhaUsuario] = useState('');
@@ -17,7 +19,20 @@ export default function CadastroUsuario() {
     const [tipoUsuario, setTipoUsuario] = useState(1);
     const [loading, setLoading] = useState(false);
 
+    //Listas
+    const [listaTipoEquipamento, setListaTipoEquipamento] = useState([]);
+
     var navigate = useNavigate()
+
+    function buscarTipoEquipamento ()
+    {
+        axios
+        .get('http://localhost:5000/api/TipoEquipamento')
+
+        .then((response) => {
+            setListaTipoEquipamento(response.data)
+        })
+    }
 
     const FazerCadastroUsuario = (event) => {
 
@@ -51,6 +66,7 @@ export default function CadastroUsuario() {
         .catch(erro => console.log(erro))
     }
 
+    useEffect(console.log(buscarTipoEquipamento, []))
 
         return(
             <div className="container-login">

@@ -3,6 +3,8 @@ import React,{ useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { parseJwt } from "../../services/auth";
+
 // import Filtro from '../../assets/icon/icon-filtro.png';
 // import Editar from '../../assets/icon/icon-editar.png';
 // import Ferramenta from '../../assets/icon/icon-ferramenta.png';
@@ -83,6 +85,14 @@ export default function CadastroEquipamento() {
 
     }
 
+    function buscarTipoEquipamento(event)
+    {
+        event.preventDefault();
+
+        axios
+        .get("http://localhost:5000/api/Equipamento/lista-meus-equipamentos", parseJwt.Role())
+    }
+
     function cadastrarEquipamento (event) 
     {
         event.preventDefault();
@@ -108,6 +118,7 @@ export default function CadastroEquipamento() {
             method: "post",
             url: "http://localhost:5000/api/Equipamento",
             data: formData,
+            parseJwt,
             headers: {"Content-Type" : "multipart/form-data" },
         })
         .then( function (resposta){
@@ -431,13 +442,13 @@ export default function CadastroEquipamento() {
                                                         </div>
                                                     </form>
                                                 </div>
-                                                {/* <div className="container-img">
+                                                <div className="container-img">
                                                     <div className="box-img" />s
 
                                                     <input type="file"/>
                                                     <button onClick={CadastroEquipamento}>Enviar</button>
                                                     
-                                                </div> */}
+                                                </div>
                                             </div>
 
                                         </div>
