@@ -35,9 +35,12 @@ namespace Projeto_Rojo.Repositories
         }
 
 
-        public Alteracao Cadastrar(Alteracao a)
+        public Alteracao Cadastrar(int id,Alteracao a)
         {
-    
+            var f = ctx.Alteracaos.FirstOrDefault(g => g.IdAlteracao == id);
+
+            f.Descricao = a.Descricao;
+
                 ctx.Alteracaos.Add(a);
 
                 ctx.SaveChanges();

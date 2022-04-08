@@ -48,7 +48,9 @@ namespace Projeto_Rojo.Controllers
                             new Claim(JwtRegisteredClaimNames.Email, b.Email),
                             new Claim(JwtRegisteredClaimNames.Jti, b.IdUsuario.ToString()),
                             new Claim(ClaimTypes.Role, b.IdTipoUsuario.ToString()),
-                            new Claim("role", b.IdTipoUsuario.ToString())
+                            new Claim("role", b.IdTipoUsuario.ToString()),
+                            new Claim("nome", b.Nome),
+                            new Claim("cargo", b.Cargo)
                         };
 
                         var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes("rojo-chave-seguranca-amais"));

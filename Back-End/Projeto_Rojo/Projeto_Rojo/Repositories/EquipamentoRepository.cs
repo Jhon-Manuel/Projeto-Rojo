@@ -104,9 +104,17 @@ namespace Projeto_Rojo.Repositories
 
         }
 
-        public void Atualizar(Equipamento e)
+        public void Atualizar(int id, Equipamento e)
         {
-            Equipamento b = ctx.Equipamentos.Find(e);
+            Equipamento b = ctx.Equipamentos.FirstOrDefault(e => e.IdEquipamento == id);
+
+            b.Modelo = e.Modelo;
+            b.NumeroDeSerie = e.NumeroDeSerie;
+            b.Porta = e.Porta;
+            b.Descricao = e.Descricao;
+            b.Dns = e.Dns;
+            b.GateWay = e.GateWay;
+            b.Mask = e.Mask;
 
             if (b.IdEquipamento == e.IdEquipamento)
             {
@@ -152,9 +160,10 @@ namespace Projeto_Rojo.Repositories
 
         public IEnumerable<Equipamento> Listar(int idUsuario)
         {
-            Usuario usuario = ctx.Usuarios.Find(idUsuario);
+            Usuario usuario = ctx.Usuarios.FirstOrDefault( e => e.IdUsuario == idUsuario);
 
             return ctx.Equipamentos
+                .Where(e => e.IdUsuario == usuario.IdUsuario)
                 .Select(e => new Equipamento
                 {
                     IdUsuario = e.IdUsuario,
@@ -169,7 +178,6 @@ namespace Projeto_Rojo.Repositories
                     Descricao = e.Descricao,
                     DataEntrada = e.DataEntrada,
                 })
-                .Where(e => e.IdUsuario == usuario.IdUsuario)
                 .ToList();
 
        

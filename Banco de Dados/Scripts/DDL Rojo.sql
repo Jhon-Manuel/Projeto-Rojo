@@ -22,7 +22,7 @@ GO
 
 CREATE TABLE ImgUsuario (
 	IdImg INT PRIMARY KEY IDENTITY(1,1),
-	IdUsuario INT NOT NULL UNIQUE FOREIGN KEY REFERENCES usuario(idUsuario),
+	IdUsuario INT UNIQUE FOREIGN KEY REFERENCES usuario(idUsuario),
 	binario VARBINARY(MAX) NOT NULL,
 	mimeType VARCHAR(30) NOT NULL,
 	nomeArquivo VARCHAR(250) NOT NULL,
@@ -45,16 +45,15 @@ GO
 
 CREATE TABLE Equipamento(
 	IdEquipamento INT PRIMARY KEY IDENTITY,
-	IdUsuario INT FOREIGN KEY REFERENCES USUARIO (IdUsuario) NOT NULL,
+	IdUsuario INT FOREIGN KEY REFERENCES USUARIO (IdUsuario),
 	IdTipoEquipamento INT FOREIGN KEY REFERENCES TIPOEQUIPAMENTO (IdTipoEquipamento) NOT NULL,
-	Modelo INT, 
 	NumeroDeSerie INT,
+	Modelo VARCHAR(80),
 	GateWay INT ,
 	Mask INT,
 	DNS INT ,
 	Porta INT ,
 	DataEntrada DATE NOT NULL,
-	Condicao BINARY NOT NULL,
 	Descricao TEXT
 	 
 );
@@ -76,5 +75,4 @@ CREATE TABLE ImgEquipamento(
 	data_inclusao DATETIME DEFAULT GETDATE() NULL
 );
 GO
-
 

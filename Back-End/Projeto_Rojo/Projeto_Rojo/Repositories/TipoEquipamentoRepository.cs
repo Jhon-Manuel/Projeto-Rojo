@@ -14,16 +14,21 @@ namespace Projeto_Rojo.Repositories
         RojoContext ctx = new RojoContext();
 
 
-        public void Atualizar(TipoEquipamento a)
+        public void Atualizar(int id, TipoEquipamento novo)
         {
-            TipoEquipamento b = ctx.TipoEquipamentos.Find(a);
+            TipoEquipamento b = ctx.TipoEquipamentos.FirstOrDefault(e => e.IdTipoEquipamento == id);
 
-            if (b.IdTipoEquipamento == a.IdTipoEquipamento)
+            if (b.Equipamento != null)
             {
-                ctx.Entry(a).State = EntityState.Modified;
+                b.Equipamento = novo.Equipamento;
+            }
+
+          
+
+            ctx.Entry(b).State = EntityState.Modified;
 
                 ctx.SaveChanges();
-            }
+            
         }
 
 
@@ -48,21 +53,25 @@ namespace Projeto_Rojo.Repositories
 
         public void Deletar(int id)
         {
-            var b = ctx.TipoEquipamentos.Find(id).ToString();
+            var b = ctx.TipoEquipamentos.FirstOrDefault(e => e.IdTipoEquipamento == id).ToString();
 
-            if (b != null)
-            {
+           
                 ctx.TipoEquipamentos.Remove(BuscarPorId(id));
 
                 ctx.SaveChanges();
-            }
+           
 
         }
 
 
         public IEnumerable<TipoEquipamento> Listar()
         {
-            return ctx.TipoEquipamentos.ToList();
+            return ctx.TipoEquipamentos.Select(e => new TipoEquipamento
+            {
+                IdTipoEquipamento = e.IdTipoEquipamento,
+                Equipamento = e.Equipamento,
+            })
+                .ToList();
         }
     }
 }

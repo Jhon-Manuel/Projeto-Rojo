@@ -22,7 +22,7 @@ namespace Projeto_Rojo.Interfaces
 
         Usuario Cadastrar(Usuario u);
 
-        void Atualizar(Usuario u);
+        void Atualizar(int id, Usuario u);
 
         void Deletar(int id);
     }

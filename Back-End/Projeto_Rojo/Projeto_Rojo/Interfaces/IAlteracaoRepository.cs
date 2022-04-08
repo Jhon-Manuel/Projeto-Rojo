@@ -14,7 +14,7 @@ namespace Projeto_Rojo.Interfaces
 
         Alteracao Cadastrar(Alteracao e);
 
-        void Atualizar(Alteracao e);
+        void Atualizar(int id, Alteracao e);
 
         void Deletar(int id);
     }

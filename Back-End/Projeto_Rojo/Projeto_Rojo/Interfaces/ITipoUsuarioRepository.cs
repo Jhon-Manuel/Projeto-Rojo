@@ -14,7 +14,7 @@ namespace Projeto_Rojo.Interfaces
 
         TipoUsuario Cadastrar(TipoUsuario e);
 
-        void Atualizar(TipoUsuario e);
+        void Atualizar(int id, TipoUsuario e);
 
         void Deletar(int id);
     }

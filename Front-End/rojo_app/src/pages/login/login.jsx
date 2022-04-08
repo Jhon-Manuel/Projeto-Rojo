@@ -17,39 +17,26 @@ export default function Login() {
 
     var navigate = useNavigate();
 
-    function buscarUsuarioPorId()
-    {        
-        axios
-        .get('http://localhost:5000/api/Usuario/', {
-            headers: {
-                Authorization: 'Bearer ' + localStorage.getItem("usuario-login")
-            }
-        })
-
-        .then((resposta) =>
-            {
-                localStorage.setItem("info",resposta.data);
-                console.log(localStorage.getItem("info"));
-            }
-        )
-        .catch(erro => console.log(erro))
-
-    }
-
-    function FazerLogin(event) {    
+    const FazerLogin = (event) => {    
         event.preventDefault();
 
         setErroMensagem(null);
 
         setIsLoading(true);
 
-        axios
-            .post('http://localhost:5000/api/Login', {
-                email: emailUsuario,
-                senha: senhaUsuario,
-            })
-            
-            .then((response) =>
+        var usuarioLogin = {
+            email : emailUsuario,
+            senha : senhaUsuario,
+        }
+
+        axios({
+            method: "post",
+            url: "http://localhost:5000/api/Login", 
+            data : usuarioLogin,
+            headers : { "Content-Type" : "application/json"}
+        })
+               
+            .then( function (response) 
             {
 
                 if (response.status === 200)
@@ -59,27 +46,15 @@ export default function Login() {
                     setIsLoading(false)
 
                     navigate('/BemVindo')
-                    console.log(`login realizado`)                       
+                    console.log(`login realizado` )  
                 }
-                    else {
-                        navigate('/Login');
-                        isLoading(false)
-                    
-                }
-                })
-        
-              
-            .then((response) => 
-            {
-                if (response.status === 200) {
-                    
-                    navigate('/BemVindo')
-                }
-                else{
+                else {
                     navigate('/Login');
                     isLoading(false)
-                }
-            })
+                
+                 }
+            })        
+    
             .catch(erro => {
                 erro = (' Email ou senha incorretos')
                 setErroMensagem(erro)

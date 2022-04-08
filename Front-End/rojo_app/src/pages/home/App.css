@@ -8,6 +8,16 @@
 
 /* ------------------ HEADER */
 
+.App {
+  position: relative
+}
+
+.container-app{
+  position: absolute;
+  z-index: 0;
+}
+
+
 .App-header {
   background-color: black;
   width: 100vmax;
@@ -17,8 +27,8 @@
   align-items: center;
   justify-content: center;
   color: white;
-  position: absolute;
-  z-index: 0;
+
+
 }
 
 .cabecalhoPrincipal-nav{
@@ -32,7 +42,7 @@
 
 
 .cabecalhoPrincipal-nav-login{
-  width: 130px;
+  width: 110px;
   height: 34px;
   border: 1px solid #FFFFFF;
   border-radius: 5px;
@@ -42,7 +52,7 @@
 
 .text-login{
   height: 36px;
-  font-size: 18px;
+  font-size: 16px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,14 +62,17 @@
 
 /* ------------------ MAIN */
 
-
-.master{
+.container-home {
   position: absolute;
   z-index: 0;
+  height: 1200px;
+  width: 100%;
+  background-color: aquamarine;
 }
 
+
 .home-banner{
-  height: 1200px;
+  height: 880px;
   width: 100vmax;
   display: flex;
   justify-content:center;
@@ -69,11 +82,11 @@
 .home-info{
   width: 80%;
   height: 655px;
-  background-color: aqua;
+  /* background-color: aqua; */
   
   display: flex;
   justify-content: space-between;
-  margin-top: 100px;
+  margin-top: 40px;
   align-items: center;
 
 }
@@ -81,17 +94,18 @@
 .info-text{
   margin-top: 80px;
   width: 534px;
-  height: 655px;
+  height: 555px;
   font-size: 20px;
   color: white;
-  background-color: blue;
+  /* background-color: blue; */
   font-family: 'Open Sans', sans-serif;
   
 }
 
 .info-text h1{
-  width: 150px;
+  width: 300px;
   margin-bottom: 50px;
+  /* background-color: aliceblue; */
 }
 
 .info-text-p {
@@ -103,9 +117,17 @@
 
   
 }
+
+.info-text p {
+  width: 400px;
+  height: auto;
+  /* background-color: aquamarine; */
+  font-weight: 400;
+}
+
 .info-text nav{
-  height: 58px;
-  width: 150px;
+  height: 50px;
+  width: 128px;
   margin-top: 100px;
   border-radius: 5px;
   background-color: #FF0303;
@@ -125,50 +147,157 @@
 
 }
 
-.container-app{
-  height: 700px;
-  width: 70%;
-  background-color:cornflowerblue;
+
+.container-home-2{
+  width: 100%;
+  height: 750px;
+  background-image: url(../../assets/img/bg.png);
+  position: absolute;
+  z-index: 1;
+  top: 980px;
+  
+}
+
+.footer{
+  background-color: black;
+  width: 100%;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  top: 1700px;
+  position: absolute;
+  z-index: 1;
+  
+  color: white;
+}
+
+/* -------------------- SERVICOS */
+
+.container-servicos{
+  height: auto;
+  width: 78%;
+  /* background-color:cornflowerblue; */
   display: flex;
   justify-content: space-between;
-  
-  
+  align-items: center;
+
+  position: absolute;
+  z-index: 1;  
+  left:150px;
+  top: 800px;
 }
+
+
+
 
 .box-app-1{
-  width: 1225px;
-  height: 528px;
+  width: 900px;
+  height: 460px;
   display: flex;
+  /* background-color: burlywood; */
 
 }
 
-.app-1-p{
+
+.app-1{
+  height: 460px;
+  width: 795px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* background-color: aqua; */
+  
+}
+
+.app-1 p, .app-1 h2 {
+  color: white;
+}
+
+
+.app-1-text{
   width: 400px;
   height: 180px;
   font-size: 18px;
   text-align: center;
-}
 
-.app-1{
-  height: auto;
-  width: 775px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  
+  margin-top: 150px;
 }
 
 
 .img{
-  height:341px;
-  width: 775px;
+  height:371px;
+  width: 795px;
   background-image: url(../../assets/img/zabbix.png);
 }
-
-
-.container-app-2{
-  background-color: white;
-  height: 600px;
-  width: 100vmax;
+.img-2{
+  height:371px;
+  width: 795px;
+  background-image: url(../../assets/img/2.png);
 }
 
+
+
+.container-servicos-2{
+  height: auto;
+  width: 78%;
+  /* background-color:cornflowerblue; */
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position: absolute;
+  z-index: 1;  
+  left:150px;
+  top: 1300px;
+}
+
+.img-gra{
+  height: 40px;
+  width: 170px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url(../../assets/img/gra.png);
+  margin-top: 20px;
+}
+
+.box-app-1-2{
+  width: 1200px;
+  height: 380px;
+  display: flex;
+  /* background-color: burlywood; */
+
+}
+
+
+
+.app-1-2{
+  height: 380px;
+  width: 795px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: aqua;
+  
+}
+
+.app-1-2 p, .app-1-2 h2 {
+  color: white;
+}
+
+
+.app-1-text-2{
+  width: 400px;
+  height: 180px;
+  font-size: 18px;
+  text-align: center;
+
+  margin-top: 80px;
+}
+.img-2{
+  height:371px;
+  width: 795px;
+  background-image: url(../../assets/img/2.png);
+}

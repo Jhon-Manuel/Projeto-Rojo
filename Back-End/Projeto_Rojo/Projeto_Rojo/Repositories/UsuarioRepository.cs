@@ -109,16 +109,22 @@ namespace Projeto_Rojo.Repositories
 
         }
          
-        public void Atualizar(Usuario a)
+        public void Atualizar(int id, Usuario a)
         {
-            Usuario b = ctx.Usuarios.Find(a);
+            Usuario b = ctx.Usuarios.FirstOrDefault(a => a.IdUsuario == id);
 
-            if (b.IdUsuario == a.IdUsuario)
-            {
-                ctx.Entry(a).State = EntityState.Modified;
+            b.IdTipoUsuario = a.IdTipoUsuario;
+            b.Email = a.Email;
+            b.Senha = a.Senha;
+            b.Contato = a.Contato;
+            b.Nome = a.Nome;
+            b.Cargo = a.Cargo;
+            b.RazaoSocial = a.RazaoSocial;
+
+                ctx.Entry(b).State = EntityState.Modified;
 
                 ctx.SaveChanges();
-            }
+            
         }
 
 

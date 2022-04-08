@@ -68,13 +68,13 @@ namespace Projeto_Rojo.Controllers
 
 
 
-        [HttpPut("{id}")]
+        [HttpPut("atualizar")]
         public IActionResult Put(int id, Alteracao eventoAtualizado)
         {
             try
             {
 
-                alteracaoRepository.Atualizar(eventoAtualizado);
+                alteracaoRepository.Atualizar(id,eventoAtualizado);
 
 
                 return StatusCode(204);
@@ -87,7 +87,7 @@ namespace Projeto_Rojo.Controllers
 
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("deletar")]
         public IActionResult Delete(int id)
         {
             try

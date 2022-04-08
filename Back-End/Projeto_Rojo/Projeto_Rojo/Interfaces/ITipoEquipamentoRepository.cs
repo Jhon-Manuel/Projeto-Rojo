@@ -14,7 +14,7 @@ namespace Projeto_Rojo.Interfaces
 
         TipoEquipamento Cadastrar(TipoEquipamento e);
 
-        void Atualizar(TipoEquipamento e);
+        void Atualizar(int id, TipoEquipamento novo);
 
         void Deletar(int id);
     }

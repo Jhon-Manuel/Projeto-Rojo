@@ -30,22 +30,51 @@ namespace Projeto_Rojo.Controllers
         }
 
 
+               // [HttpGet("lista-meus-equipamentos")]
+                //public IActionResult Get()
+                //{
+                //    try
+                //    {
+                //        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+//
+  //                      return Ok(equipamentoRepository.Listar(idUsuario));
+    //                }
+      //              catch (Exception erro)
+        //            {
+          //          return BadRequest(
+           //             new
+              //          {
+                //            mensagem = " obrigatório id do usuario!",
+                  //          erro = erro
+                  //
+                      //  }
+                    //    );
+                    //} 
+                //}
+
                 [HttpGet("lista-meus-equipamentos")]
-                public IActionResult Get()
+                public IActionResult Get(int idUsuario)
                 {
                     try
                     {
-                        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
+
                         return Ok(equipamentoRepository.Listar(idUsuario));
                     }
                     catch (Exception erro)
                     {
-                        return BadRequest(erro);
-                    }
+                        return BadRequest(
+                        new
+                        {
+                            mensagem = " obrigatório id do usuario!",
+                            erro = erro
+
+                        }
+                        );
+                    } 
                 }
 
 
-                [HttpGet("equipamento/{id}")]
+                [HttpGet("equipamento")]
                 public IActionResult GetById(int idEquipamento)
                 {
                     try
@@ -59,7 +88,6 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [Authorize(Roles = "1")]
                 [HttpPost]
                 public IActionResult Post(Equipamento novoEvento)
                 {
@@ -76,13 +104,12 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [Authorize(Roles = "1")]
-                [HttpPut("{id}")]
+                [HttpPut("atualizar")]
                 public IActionResult Put(int id, Equipamento eventoAtualizado)
                 {
                     try
                     {
-                        equipamentoRepository.Atualizar(eventoAtualizado);
+                        equipamentoRepository.Atualizar(id,eventoAtualizado);
 
                         return StatusCode(204);
                     }
@@ -93,8 +120,7 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [Authorize(Roles = "1")]
-                [HttpDelete("{id}")]
+                [HttpDelete("deletar")]
                 public IActionResult Delete(int id)
                 {
                     try

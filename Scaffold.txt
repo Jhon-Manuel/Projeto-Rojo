@@ -1,0 +1,1 @@
+Scaffold-DbContext "Data Source =DESKTOP-G5G5MAP\SQLEXPRESS; initial catalog=PROJETO_ROJO;  Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Domains -ContextDir Contexts -Context RojoContext -force

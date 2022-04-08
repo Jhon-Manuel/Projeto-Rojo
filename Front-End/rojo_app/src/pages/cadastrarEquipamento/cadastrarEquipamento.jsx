@@ -1,5 +1,5 @@
 import axios from "axios";
-import React,{ useState} from "react";
+import React,{ useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -46,13 +46,37 @@ export default function CadastroEquipamento() {
     const [dns, setDns] = useState(0);
     const [porta, setPorta] = useState(0);
     const [img64, setImg64] = useState(0);
-    const [arquivo, setArquivo] = useState('');
     const [descricao, setDescricao] = useState('');
     const [data, setData] = useState(new Date())
     const [condicao, setCondicao] = useState('');
 
     const [dadoUsuario, setDadoUsuario] = useState([]);
     const [dadoEquipamento, setDadoEquipamento] =useState([]);
+    const [dadoTipoEquipamento, setDadoTipoEquipamento] = useState([]);
+    const [dadoModelo, setDadoModelo] =useState([]);
+
+
+    const buscarTipoEquipamento = () =>
+    {
+        axios
+        .get('http://localhost:5000/api/TipoEquipamento/lista')
+
+        .then(function (response) {
+            setDadoTipoEquipamento(response.data)
+        })
+        .catch((erro)=> console.log(erro))
+    }
+
+    const buscarTipoModelo = () =>
+    {
+        axios
+        .get('http://localhost:5000/api/TipoEquipamento/lista')
+
+        .then(function (response) {
+            setDadoModelo(response.data)
+        })
+        .catch((erro)=> console.log(erro))
+    }
 
 
     const realizarLogout = async () => {
@@ -84,15 +108,6 @@ export default function CadastroEquipamento() {
         .catch(erro => console.log(erro))
 
     }
-
-    function buscarTipoEquipamento(event)
-    {
-        event.preventDefault();
-
-        axios
-        .get("http://localhost:5000/api/Equipamento/lista-meus-equipamentos", parseJwt.Role())
-    }
-
     function cadastrarEquipamento (event) 
     {
         event.preventDefault();
@@ -102,7 +117,9 @@ export default function CadastroEquipamento() {
         const target = document.getElementById('arquivo');
         const file = target.files[0]
         formData.append(`arquivo`, file, file.name);
-
+        
+        formData.append('id', 0);
+        formData.append(`img64`, img64)
         formData.append( `Modelo`, modelo);
         formData.append('NumeroSerie', numeroSerie);
         formData.append('GateWay', gateWay);
@@ -137,7 +154,7 @@ export default function CadastroEquipamento() {
 
     
     
-    
+    useEffect(() => (buscarTipoEquipamento()),[])
         return(   
             <div className="container-equipamento">
                 <div>
@@ -268,23 +285,30 @@ export default function CadastroEquipamento() {
 
                                                 <div className="container-info-dados">
 
-                                                    <form onSubmit={cadastrarEquipamento}>
+                                                    <form encType="multipart/form-data">
                                                         <div className="dados">
                                                             <div className="info-1">
                                                                 <div>
 
                                                                     <p>
                                                                         Tipo Equipamento
-                                                                    </p>                         
-                                                                    <input
-                                                                        className="input"
-                                                                        type="text"
-                                                                        name="tipoEquipamento"
-                                                                        value={idTipoEquipamento}
-                                                                        placeholder="Tipo Equipamento"
-                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}
+                                                                    </p>
+                                                                    <select
+                                                                        name="idTipoEquipamento"  
                                                                         disabled = {condicaoAtualizar === true ? 'none' : ''}
-                                                                    /> 
+                                                                        value={idTipoEquipamento}   
+                                                                        className="input"      
+                                                                        onChange={(event) => setIdTipoEquipamento(event.target.value)}>
+                                                                         <option value="#">Escolha</option>
+                                    {dadoTipoEquipamento.map((event) => {
+                                        return (
+
+                                            <option key={event.idTipoEquipamento} value={event.idTipoEquipamento}>{event.equipamento}
+                                            </option>
+                                        );
+                                    })}                                 
+                                                                    </select>                        
+                                                                    
                                                                 </div>
 
 
@@ -440,14 +464,17 @@ export default function CadastroEquipamento() {
                                                                 </div>
 
                                                         </div>
-                                                    </form>
-                                                </div>
-                                                <div className="container-img">
-                                                    <div className="box-img" />s
+                                                        <div className="container-img">
+                                                            <div className="box-img" />
 
-                                                    <input type="file"/>
-                                                    <button onClick={CadastroEquipamento}>Enviar</button>
-                                                    
+                                                            <input 
+                                                            type="file"
+                                                            accept="image/png, image/jpeg"
+                                                            onChange={(e) => setImg64(e)}
+                                                            />
+                                                                                                              
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
 

@@ -1,9 +1,8 @@
-import axios from "axios";
-import React,{ useEffect, useState} from "react";
+import React,{  useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { buscarUsuarioPorId } from "../../services/auth";
+import { parseJwt } from "../../services/auth";
 
 import Filtro from '../../assets/icon/icon-filtro.png';
 import Editar from '../../assets/icon/icon-editar.png';
@@ -28,39 +27,17 @@ export default function BemVindo()
 
     var navigate = useNavigate();
     
-
     //States Usuario
-    const [nome, setNome] = useState('');
-    const [cargo, setCargo] = useState('');
-
-    const [dadoUsuario, setDadoUsuario] = useState([]);
-
-
-    // async function buscarUsuarioPorId()
-    // {        
-    //     axios
-    //     .get('http://localhost:5000/api/Usuario/', {
-    //         headers: {
-    //             Authorization: 'Bearer ' + localStorage.getItem("usuario-login")
-    //         }
-    //     })
-
-    //     .then((resposta) =>
-    //         {
-    //             localStorage.setItem("info",resposta.data);
-    //             console.log(localStorage.getItem("info"));
-    //         }
-    //     )
-    //     .catch(erro => console.log(erro))
-
-    // }
-
-    useEffect(() => (setDadoUsuario = localStorage.getItem("info")),[])
+    const [nome, setNome] = useState(parseJwt.nome);
+    const [cargo, setCargo] = useState(parseJwt.cargo);
+    const [ex, setEx] = useState(parseJwt.role);
     
     const realizarLogout = async () => {
         try {
           await AsyncStorage.removeItem('usuario-login');
+          console.log(cargo)
           navigate('/'); 
+          
         } catch (error) {
           console.warn(error);
         }
@@ -157,11 +134,11 @@ export default function BemVindo()
                                         />
                                         <div className="perfil-texto">
                                             <p
-                                            className="perfil-nome">{dadoUsuario.nome}</p>
+                                            className="perfil-nome">{nome}</p>
                                                             
                                             <p
                                             className="perfil-cargo">
-                                                {dadoUsuario.cargo}
+                                                {cargo}
                                             </p>
                                             
                                         </div>
@@ -180,7 +157,7 @@ export default function BemVindo()
             </div>
             <div className="conteudo-equipamento">
             <header>
-                        <h2 className="todo-titulo">Bem Vindo</h2>
+                        <h2 className="todo-titulo">Bem Vindo {ex}</h2>
                     </header>
                 
             <section>

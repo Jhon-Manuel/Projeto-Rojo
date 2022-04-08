@@ -20,16 +20,16 @@ namespace Projeto_Rojo.Repositories
        //     ctx = rojoContext;
        // }
  
-        public void Atualizar(TipoUsuario a)
+        public void Atualizar(int id, TipoUsuario a )
         {
-            TipoUsuario b = ctx.TipoUsuarios.Find(a);
+            TipoUsuario b = ctx.TipoUsuarios.FirstOrDefault(a => a.IdTipoUsuario == id);
 
-            if (b.IdTipoUsuario == a.IdTipoUsuario)
-            {
-                ctx.Entry(a).State = EntityState.Modified;
+            b.Usuario = a.Usuario;
+
+            ctx.Update(b);
 
                 ctx.SaveChanges();
-            }
+            
         }
 
 

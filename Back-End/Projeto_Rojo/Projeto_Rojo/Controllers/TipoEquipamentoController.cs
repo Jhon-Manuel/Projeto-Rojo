@@ -23,13 +23,12 @@ namespace Projeto_Rojo.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet("lista")]
         public IActionResult Get()
         {
             try
             {
-                int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
-                return Ok(TipoEquipamentoRepository.Listar(int idUsuario));
+                return Ok(TipoEquipamentoRepository.Listar());
             }
             catch (Exception erro)
             {
@@ -71,13 +70,13 @@ namespace Projeto_Rojo.Controllers
 
 
 
-        [HttpPut("{id}")]
-        public IActionResult Put(int id, TipoEquipamento tipoEquipamentoAtualizado)
+        [HttpPut("atualizar")]
+        public IActionResult Put(int id, TipoEquipamento novo)
         {
             try
             {
 
-                TipoEquipamentoRepository.Atualizar(tipoEquipamentoAtualizado);
+                TipoEquipamentoRepository.Atualizar(id, novo);
 
 
                 return StatusCode(204);
@@ -90,7 +89,7 @@ namespace Projeto_Rojo.Controllers
 
 
 
-        [HttpDelete("{id}")]
+        [HttpDelete("delete")]
         public IActionResult Delete(int id)
         {
             try
