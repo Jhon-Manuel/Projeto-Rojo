@@ -131,7 +131,7 @@ namespace Projeto_Rojo.Repositories
 
         public Usuario BuscarPorId(int id)
         {
-            return ctx.Usuarios.FirstOrDefault(e => e.IdUsuario == id);
+            return ctx.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
         }
 
 
@@ -149,14 +149,11 @@ namespace Projeto_Rojo.Repositories
 
         public void Deletar(int id)
         {
-            var b = ctx.Usuarios.Find(id).ToString();
+            var u = ctx.Usuarios.FirstOrDefault(u => u.IdUsuario == id);
 
-            if (b != null)
-            {
-                ctx.Usuarios.Remove(BuscarPorId(id));
+            ctx.Usuarios.Remove(u);
 
-                ctx.SaveChanges();
-            }
+            ctx.SaveChanges();
 
         }
 

@@ -1,0 +1,19 @@
+Coisas pra arrumar 
+- metodos de atualizar 
+- alterar claim do token (administrador = RojoInfraUser / Funcionario = CorporacaoUser)
+- implementar restricao de acesso
+- controller add todos os metodos de requere um id externo , receber pela url também além do body
+- alterar metodo de buscar por id usando o token
+- adicionar if em todos os metodos update da api
+
+
+Testado e Concluido
+- tipoUsuario( get/ post/ getById / delete / update)
+- tipoEquipamento ( get / post / getById / update /  delete )
+- login (post)
+- usuario (get / update / post / delete)
+- equipamento ( get/)
+
+Modificar no front
+- Ao clicar no batao cadastrar (ele salvara o numero de serie do equipamento numa variavel web) e fazer o redirecionamento a equipamento ao inicializar
+(na tela equipamento realizar com useEffect a chamada do metodo de buscarEquiPorId usando a variavel preenchendo os input com o objeto) 

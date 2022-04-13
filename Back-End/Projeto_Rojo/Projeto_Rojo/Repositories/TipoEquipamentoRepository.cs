@@ -53,13 +53,11 @@ namespace Projeto_Rojo.Repositories
 
         public void Deletar(int id)
         {
-            var b = ctx.TipoEquipamentos.FirstOrDefault(e => e.IdTipoEquipamento == id).ToString();
+            var b = ctx.TipoEquipamentos.FirstOrDefault(e => e.IdTipoEquipamento == id);
 
-           
-                ctx.TipoEquipamentos.Remove(BuscarPorId(id));
+            ctx.TipoEquipamentos.Remove(b);
 
-                ctx.SaveChanges();
-           
+            ctx.SaveChanges();
 
         }
 

@@ -54,14 +54,11 @@ namespace Projeto_Rojo.Repositories
 
         public void Deletar(int id)
         {
-            var b = ctx.TipoUsuarios.Find(id).ToString();
+            var b = ctx.TipoUsuarios.FirstOrDefault(c => c.IdTipoUsuario == id);
 
-            if (b != null)
-            {
-                ctx.TipoUsuarios.Remove(BuscarPorId(id));
+            ctx.TipoUsuarios.Remove(b);
 
-                ctx.SaveChanges();
-            }
+            ctx.SaveChanges();
 
         }
 

@@ -68,7 +68,7 @@ namespace Projeto_Rojo.Controllers
                 }
             }
 
-            [HttpPut("atualizar")]
+            [HttpPut("atualizar/{id}")]
             public IActionResult Put(int id, Usuario usuarioAtualizado)
             {
                 try
@@ -76,8 +76,8 @@ namespace Projeto_Rojo.Controllers
 
                     usuarioRepository.Atualizar( id, usuarioAtualizado);
 
- 
                     return StatusCode(204);
+
                 }
                 catch (Exception ex)
                 {

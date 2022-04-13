@@ -145,16 +145,12 @@ namespace Projeto_Rojo.Repositories
 
 
         public void Deletar(int id)
-        {
-            var b = ctx.Equipamentos.Find(id).ToString();
+        { 
+            var e = ctx.Equipamentos.FirstOrDefault(e => e.IdEquipamento == id);
 
-            if (b != null)
-            {
-                ctx.Equipamentos.Remove(BuscarPorId(id));
+            ctx.Equipamentos.Remove(e);
 
-                ctx.SaveChanges();
-            }
-
+            ctx.SaveChanges();
         }
 
 

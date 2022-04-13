@@ -15,9 +15,9 @@ namespace Projeto_Rojo.Repositories
 
                
        
-        public void Atualizar(Alteracao a)
+        public void Atualizar(int id, Alteracao a)
         {
-            Alteracao b = ctx.Alteracaos.Find(a);
+            Alteracao b = ctx.Alteracaos.Find(id);
 
             if (b.IdAlteracao == a.IdAlteracao)
             {
@@ -35,15 +35,11 @@ namespace Projeto_Rojo.Repositories
         }
 
 
-        public Alteracao Cadastrar(int id,Alteracao a)
+        public Alteracao Cadastrar(Alteracao a)
         {
-            var f = ctx.Alteracaos.FirstOrDefault(g => g.IdAlteracao == id);
+            ctx.Alteracaos.Add(a);
 
-            f.Descricao = a.Descricao;
-
-                ctx.Alteracaos.Add(a);
-
-                ctx.SaveChanges();
+            ctx.SaveChanges();
 
             return a;
      
@@ -52,14 +48,11 @@ namespace Projeto_Rojo.Repositories
 
         public void Deletar(int id)
         {
-            var b = ctx.Alteracaos.Find(id).ToString();
+            var a = ctx.Alteracaos.FirstOrDefault(a => a.IdAlteracao == id);
 
-            if (b != null)
-            {
-                ctx.Alteracaos.Remove(BuscarPorId(id));
+            ctx.Alteracaos.Remove(a);
 
-                ctx.SaveChanges();
-            }
+            ctx.SaveChanges();
 
         }
 

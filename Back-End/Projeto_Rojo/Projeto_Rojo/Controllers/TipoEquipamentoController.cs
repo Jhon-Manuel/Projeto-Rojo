@@ -70,7 +70,7 @@ namespace Projeto_Rojo.Controllers
 
 
 
-        [HttpPut("atualizar")]
+        [HttpPut("atualizar/{id}")]
         public IActionResult Put(int id, TipoEquipamento novo)
         {
             try

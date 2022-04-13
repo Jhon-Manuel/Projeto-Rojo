@@ -52,11 +52,12 @@ namespace Projeto_Rojo.Controllers
                     //} 
                 //}
 
-                [HttpGet("lista-meus-equipamentos")]
-                public IActionResult Get(int idUsuario)
+                [HttpGet("lista-equipamentos")]
+                public IActionResult Get()
                 {
                     try
                     {
+                        int idUsuario = Convert.ToInt32(HttpContext.User.Claims.First(c => c.Type == JwtRegisteredClaimNames.Jti).Value);
 
                         return Ok(equipamentoRepository.Listar(idUsuario));
                     }
@@ -74,12 +75,12 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [HttpGet("equipamento")]
-                public IActionResult GetById(int idEquipamento)
+                [HttpGet("equipamento/{id}")]
+                public IActionResult GetById(int id)
                 {
                     try
                     {
-                        return Ok(equipamentoRepository.BuscarPorId(idEquipamento));
+                        return Ok(equipamentoRepository.BuscarPorId(id));
                     }
                     catch (Exception erro)
                     {
@@ -104,7 +105,7 @@ namespace Projeto_Rojo.Controllers
                 }
 
 
-                [HttpPut("atualizar")]
+                [HttpPut("atualizar/{id}")]
                 public IActionResult Put(int id, Equipamento eventoAtualizado)
                 {
                     try
