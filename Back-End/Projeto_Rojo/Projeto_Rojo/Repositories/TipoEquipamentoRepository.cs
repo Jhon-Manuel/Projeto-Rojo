@@ -27,7 +27,7 @@ namespace Projeto_Rojo.Repositories
 
             ctx.Entry(b).State = EntityState.Modified;
 
-                ctx.SaveChanges();
+            ctx.SaveChanges();
             
         }
 

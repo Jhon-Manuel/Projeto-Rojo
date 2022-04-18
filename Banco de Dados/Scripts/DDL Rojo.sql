@@ -36,12 +36,6 @@ CREATE TABLE TipoEquipamento(
 );
 GO
 
-CREATE TABLE Alteracao(
-	IdAlteracao INT PRIMARY KEY IDENTITY,
-	Descricao VARCHAR(255) NOT NULL,
-	DataAlteracao DATE NOT NULL
-);
-GO
 
 CREATE TABLE Equipamento(
 	IdEquipamento INT PRIMARY KEY IDENTITY,
@@ -56,6 +50,14 @@ CREATE TABLE Equipamento(
 	DataEntrada DATE NOT NULL,
 	Descricao TEXT
 	 
+);
+GO
+
+CREATE TABLE Alteracao(
+	IdAlteracao INT PRIMARY KEY IDENTITY,
+	IdEquipametno INT FOREIGN KEY REFERENCES Equipamento (IdEquipamento),
+	Descricao VARCHAR(255) NOT NULL,
+	DataAlteracao DATE NOT NULL
 );
 GO
 

@@ -108,23 +108,42 @@ namespace Projeto_Rojo.Repositories
         {
             Equipamento b = ctx.Equipamentos.FirstOrDefault(e => e.IdEquipamento == id);
 
-            b.Modelo = e.Modelo;
-            b.NumeroDeSerie = e.NumeroDeSerie;
-            b.Porta = e.Porta;
-            b.Descricao = e.Descricao;
-            b.Dns = e.Dns;
-            b.GateWay = e.GateWay;
-            b.Mask = e.Mask;
-
-            if (b.IdEquipamento == e.IdEquipamento)
+            if (e.Modelo != null)
             {
-                ctx.Entry(e).State = EntityState.Modified;
-
-                ctx.SaveChanges();
+                b.Modelo = e.Modelo;
             }
+            if (e.NumeroDeSerie != null)
+            {
+                b.NumeroDeSerie = e.NumeroDeSerie; 
+            }
+            if (e.Porta != null)
+            {
+                b.Porta = e.Porta;
+            }
+            if (e.Dns != null)
+            {
+                b.Dns = e.Dns;
+            }
+            if (e.GateWay != null)
+            {
+                b.GateWay = e.GateWay;
+            }
+            if(e.Mask != null)
+            {
+                b.Mask = e.Mask;
+            }
+            if (e.Descricao != null)
+            {
+                b.Descricao = e.Descricao;
+            }
+
+
+            ctx.Equipamentos.Update(b);
+
+            ctx.SaveChanges();
+            
         }
-
-
+    
 
         public Equipamento BuscarPorId(int idEquipamento)
         {

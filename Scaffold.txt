@@ -1,1 +1,7 @@
 Scaffold-DbContext "Data Source =DESKTOP-G5G5MAP\SQLEXPRESS; initial catalog=PROJETO_ROJO;  Integrated Security=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Domains -ContextDir Contexts -Context RojoContext -force
+
+Banco do AWS
+
+servidor : dbprojeto-rojo.ca4n6cmzyivn.us-east-1.rds.amazonaws.com
+login : Desenvolvedor
+senha : Senai@Grupo11

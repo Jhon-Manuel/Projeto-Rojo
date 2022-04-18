@@ -8,11 +8,14 @@ Coisas pra arrumar
 
 
 Testado e Concluido
-- tipoUsuario( get/ post/ getById / delete / update)
+- tipoUsuario( get/ post/ getById / delete / update )
 - tipoEquipamento ( get / post / getById / update /  delete )
-- login (post)
-- usuario (get / update / post / delete)
-- equipamento ( get/)
+- login ( post )
+- usuario ( get / update / post / delete )
+- equipamento ( get por usuario / getbyid / post / update / delete )
+- alteracao ( get / getbyid / post / update /delete )
+
+TESTAR NO FERIADO METODOS DE IMAGEM
 
 Modificar no front
 - Ao clicar no batao cadastrar (ele salvara o numero de serie do equipamento numa variavel web) e fazer o redirecionamento a equipamento ao inicializar

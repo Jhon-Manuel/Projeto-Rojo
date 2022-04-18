@@ -18,16 +18,27 @@ namespace Projeto_Rojo.Repositories
         public void Atualizar(int id, Alteracao a)
         {
             Alteracao b = ctx.Alteracaos.Find(id);
-
-            if (b.IdAlteracao == a.IdAlteracao)
+            
+            if(a.IdEquipamento != null)
             {
-                ctx.Entry(a).State = EntityState.Modified;
-
-                ctx.SaveChanges();
+                b.IdEquipamento = a.IdEquipamento;
             }
+
+            if (a.Descricao != null)
+            {
+                b.Descricao = a.Descricao;
+            }
+            
+            if(a.DataAlteracao >= DateTime.Today)
+            {
+                b.DataAlteracao = a.DataAlteracao;
+            }
+
+            ctx.Alteracaos.Update(b);
+
+            ctx.SaveChanges();
+            
         }
-
-
 
         public Alteracao BuscarPorId(int id)
         {

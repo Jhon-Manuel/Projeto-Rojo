@@ -24,11 +24,14 @@ namespace Projeto_Rojo.Repositories
         {
             TipoUsuario b = ctx.TipoUsuarios.FirstOrDefault(a => a.IdTipoUsuario == id);
 
-            b.Usuario = a.Usuario;
+            if(a.Usuario != null)
+            {
+                b.Usuario = a.Usuario;
+            }
 
             ctx.Update(b);
 
-                ctx.SaveChanges();
+            ctx.SaveChanges();
             
         }
 

@@ -31,9 +31,8 @@ namespace Projeto_Rojo.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                //optionsBuilder.UseSqlServer("Data Source =DESKTOP-G5G5MAP\\SQLEXPRESS; initial catalog=PROJETO_ROJO;  Integrated Security=True;");
-                optionsBuilder.UseSqlServer("Data Source =NOTE0113C2\\SQLEXPRESS; initial catalog=PROJETO_ROJO;  user id= sa; pwd=Senai@132;");
+            //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=NOTE0113C2\\SQLEXPRESS; initial catalog=PROJETO_ROJO; user id=sa; pwd=Senai@132;");
             }
         }
 
@@ -44,7 +43,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<Alertum>(entity =>
             {
                 entity.HasKey(e => e.IdAlerta)
-                    .HasName("PK__Alerta__D2CDBC4FE55E675F");
+                    .HasName("PK__Alerta__D2CDBC4FF14F42E3");
 
                 entity.Property(e => e.Descricao)
                     .IsRequired()
@@ -60,7 +59,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<Alteracao>(entity =>
             {
                 entity.HasKey(e => e.IdAlteracao)
-                    .HasName("PK__Alteraca__76DD1CC12DB14E40");
+                    .HasName("PK__Alteraca__76DD1CC1AD18CB2C");
 
                 entity.ToTable("Alteracao");
 
@@ -70,12 +69,17 @@ namespace Projeto_Rojo.Contexts
                     .IsRequired()
                     .HasMaxLength(255)
                     .IsUnicode(false);
+
+                entity.HasOne(d => d.IdEquipamentoNavigation)
+                    .WithMany(p => p.Alteracaos)
+                    .HasForeignKey(d => d.IdEquipamento)
+                    .HasConstraintName("FK__Alteracao__IdEqu__5AEE82B9");
             });
 
             modelBuilder.Entity<Equipamento>(entity =>
             {
                 entity.HasKey(e => e.IdEquipamento)
-                    .HasName("PK__Equipame__E309D87FD1D0F5E7");
+                    .HasName("PK__Equipame__E309D87F83948D22");
 
                 entity.ToTable("Equipamento");
 
@@ -104,7 +108,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<ImgEquipamento>(entity =>
             {
                 entity.HasKey(e => e.IdImagemEquipamento)
-                    .HasName("PK__ImgEquip__739FE4ADA0ED3863");
+                    .HasName("PK__ImgEquip__739FE4ADF20E1C54");
 
                 entity.ToTable("ImgEquipamento");
 
@@ -138,11 +142,11 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<ImgUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdImg)
-                    .HasName("PK__ImgUsuar__0C1AF99B909631E0");
+                    .HasName("PK__ImgUsuar__0C1AF99B648FC5A5");
 
                 entity.ToTable("ImgUsuario");
 
-                entity.HasIndex(e => e.IdUsuario, "UQ__ImgUsuar__5B65BF962EC6D4F5")
+                entity.HasIndex(e => e.IdUsuario, "UQ__ImgUsuar__5B65BF961C4E4762")
                     .IsUnique();
 
                 entity.Property(e => e.Binario)
@@ -175,11 +179,11 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<TipoEquipamento>(entity =>
             {
                 entity.HasKey(e => e.IdTipoEquipamento)
-                    .HasName("PK__TipoEqui__0191D1910E2378C1");
+                    .HasName("PK__TipoEqui__0191D191A9BE2A3C");
 
                 entity.ToTable("TipoEquipamento");
 
-                entity.HasIndex(e => e.Equipamento, "UQ__TipoEqui__3185A02DC737E767")
+                entity.HasIndex(e => e.Equipamento, "UQ__TipoEqui__3185A02D2B9455AE")
                     .IsUnique();
 
                 entity.Property(e => e.Equipamento)
@@ -191,11 +195,11 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<TipoUsuario>(entity =>
             {
                 entity.HasKey(e => e.IdTipoUsuario)
-                    .HasName("PK__TipoUsua__CA04062B357133DD");
+                    .HasName("PK__TipoUsua__CA04062BABD3D77C");
 
                 entity.ToTable("TipoUsuario");
 
-                entity.HasIndex(e => e.Usuario, "UQ__TipoUsua__E3237CF70C27E9C0")
+                entity.HasIndex(e => e.Usuario, "UQ__TipoUsua__E3237CF7AD80DECE")
                     .IsUnique();
 
                 entity.Property(e => e.Usuario)
@@ -207,7 +211,7 @@ namespace Projeto_Rojo.Contexts
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario)
-                    .HasName("PK__Usuario__5B65BF9792CE33C8");
+                    .HasName("PK__Usuario__5B65BF97C92FBC7E");
 
                 entity.ToTable("Usuario");
 

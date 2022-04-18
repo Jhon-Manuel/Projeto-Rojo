@@ -86,7 +86,7 @@ export default function Login() {
 
                     <form className="form-login" onSubmit={(event) => FazerLogin(event)}>
                         <div className="box-input-login">
-                            <p>Email</p>
+                            <p className="box-input-login-p">Email</p>
 
                             <input
                                 className="input-login"
@@ -97,7 +97,7 @@ export default function Login() {
                             />
                         </div>
                         <div className="box-input-login">
-                            <p>Senha</p>
+                            <p className="box-input-login-p"    >Senha</p>
                             <input
                                 className="input-login"
                                 type="password"

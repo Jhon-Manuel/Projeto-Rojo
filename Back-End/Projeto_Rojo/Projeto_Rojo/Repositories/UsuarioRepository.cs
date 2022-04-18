@@ -121,9 +121,9 @@ namespace Projeto_Rojo.Repositories
             b.Cargo = a.Cargo;
             b.RazaoSocial = a.RazaoSocial;
 
-                ctx.Entry(b).State = EntityState.Modified;
+            ctx.Entry(b).State = EntityState.Modified;
 
-                ctx.SaveChanges();
+            ctx.SaveChanges();
             
         }
 

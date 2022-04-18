@@ -10,6 +10,7 @@ namespace Projeto_Rojo.Domains
         public Equipamento()
         {
             Alerta = new HashSet<Alertum>();
+            Alteracaos = new HashSet<Alteracao>();
             ImgEquipamentos = new HashSet<ImgEquipamento>();
         }
 
@@ -28,6 +29,7 @@ namespace Projeto_Rojo.Domains
         public virtual TipoEquipamento IdTipoEquipamentoNavigation { get; set; }
         public virtual Usuario IdUsuarioNavigation { get; set; }
         public virtual ICollection<Alertum> Alerta { get; set; }
+        public virtual ICollection<Alteracao> Alteracaos { get; set; }
         public virtual ICollection<ImgEquipamento> ImgEquipamentos { get; set; }
     }
 }

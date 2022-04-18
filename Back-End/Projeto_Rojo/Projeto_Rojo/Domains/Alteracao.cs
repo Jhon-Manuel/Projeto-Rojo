@@ -10,5 +10,8 @@ namespace Projeto_Rojo.Domains
         public int IdAlteracao { get; set; }
         public string Descricao { get; set; }
         public DateTime DataAlteracao { get; set; }
+        public int? IdEquipamento { get; set; }
+
+        public virtual Equipamento IdEquipamentoNavigation { get; set; }
     }
 }
