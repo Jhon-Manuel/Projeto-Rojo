@@ -4,7 +4,7 @@ import { Link,useNavigate } from "react-router-dom";
 
 import Logo from '../../assets/img/logoRojo.png';
 
-import '../../assets/css/login.css';
+import '../../assets/css/cadastroUsuario.css';
 
 export default function CadastroUsuario() {
     
@@ -57,55 +57,59 @@ export default function CadastroUsuario() {
     }
 
 
-        return(
-            <div className="container-login">
-                 <header>
-                    <div className="logo-header-login">
+    return(
+            <div className="container-cadastrar">
+                 <header className='container-header'>
+                    <div className="logo-header">
                         <nav>
                             <Link to="/"><img src={Logo}/></Link>
                         </nav>
                     </div>    
                 </header>
-                <div className="bg-animation-login"/>
-                <div className="box-login-2">
-                        <div className="box-login-nav">
+
+                <div className='bg-animation-pilula'/>
+                <div className="bg-animation-roda"/>
+
+                <div className="box-cadastrar">
+                        <div className="box-cadastrar-nav">
                             <nav>       
-                                <Link to="/Login">LOGIN</Link>
+                                <Link id="box-cadastrar-nav-login" to="/Login">LOGIN</Link>
                                 <Link to="/CadastrarUsuario"> CADASTRAR</Link>
                             </nav>
                         </div>
 
-                        <div className="box-form-login-2">
+                        <div className="container-form-cadastrar">
 
-                            <form  className="form-login-2" onSubmit={FazerCadastroUsuario}>
-                                <div className="cont-login">
+                            <form  className="form-cadastrar" onSubmit={FazerCadastroUsuario}>
+                                <div className="box-form-cadastro">
 
                                     <div className="box-cadastro-1">
-                                        <div className="box-input-login-2">
+                                        
+                                        <div className="box-input-cadastro">
                                             <p>Nome</p>
 
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="text"
                                                 value={nome}
                                                 onChange={event => setNome(event.target.value)}
                                                 placeholder="nome completo"
                                             /> 
                                         </div>
-                                        <div className="box-input-login-2">
+                                        <div className="box-input-cadastro">
                                             <p>Cargo</p>
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="text"
                                                 value={cargo}
                                                 onChange={event => setCargo(event.target.value)}
                                                 placeholder="posicao"
                                             />
                                         </div>
-                                        <div className="box-input-login-2">
+                                        <div className="box-input-cadastro">
                                             <p>Empresa</p>
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="empresa"
                                                 value={razaoSocial}
                                                 onChange={event => setRazaoSocial(event.target.value)}
@@ -116,11 +120,11 @@ export default function CadastroUsuario() {
 
                                     <div className="box-cadastro-2">
 
-                                        <div className="box-input-login-2">
+                                        <div className="box-input-cadastro">
                                             <p>Email</p>
 
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="email"
                                                 name="email"
                                                 value={emailUsuario}
@@ -128,20 +132,20 @@ export default function CadastroUsuario() {
                                                 placeholder="example@email.com"
                                             /> 
                                         </div>
-                                        <div className="box-input-login-2">
+                                        <div className="box-input-cadastro">
                                             <p>Senha</p>
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="password"
                                                 value={senhasuario}
                                                 onChange={event => setSenhaUsuario(event.target.value)}
                                                 placeholder="* * * * *"
                                             />
                                         </div>
-                                        <div className="box-input-login-2">
+                                        <div className="box-input-cadastro">
                                             <p>Contato</p>
                                             <input
-                                                className="input-login"
+                                                className="input-cadastro"
                                                 type="text"
                                                 value={contato}
                                                 onChange={event => setContato(event.target.value)}
@@ -149,15 +153,20 @@ export default function CadastroUsuario() {
                                             />
                                         </div>
                                     </div>
+                                    <div>
+                                        <div className='box-usuario'>
+                                            <div className='box-img-user'/>
+                                        </div>
+                                    </div>
                                 </div>
-                          
+                                <div className='box-button-cadastrar'>
 
                                     {
                                         loading === true && (
                                             <button
                                             type="submit"
                                             disabled
-                                            className="btn-login-2"
+                                            className="btn-cadastro"
                                             id="btn__login"
                                             >
                                             Loading...
@@ -168,7 +177,7 @@ export default function CadastroUsuario() {
                                     {
                                         loading === false && (
                                             <button
-                                            className="btn-login-2"
+                                            className="btn-cadastro"
                                             id="btn__login"
                                             type="submit"
                                             disabled={
@@ -181,6 +190,9 @@ export default function CadastroUsuario() {
                                             </button>
                                         )
                                     }
+                                </div>
+                          
+
       
 
 

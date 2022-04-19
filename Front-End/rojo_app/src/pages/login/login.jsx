@@ -66,19 +66,22 @@ export default function Login() {
     return (
 
         <div className="container-login">
-            <header>
-                <div className="logo-header-login">
+            <header className='container-header'>
+                <div className="logo-header">
                     <nav>
                         <Link to="/"><img src={Logo} /></Link>
                     </nav>
                 </div>
             </header>
-            <div className="bg-animation-login" />
+            
+            <div className='bg-animation-pilula'/>
+            <div className="bg-animation-roda" />
+
             <div className="box-login">
                 <div className="box-login-nav">
                     <nav>
                         <Link to="/Login">LOGIN</Link>
-                        <Link to="/CadastrarUsuario"> CADASTRAR</Link>
+                        <Link id="box-login-nav-cadastrar" to="/CadastrarUsuario"> CADASTRAR</Link>
                     </nav>
                 </div>
 
